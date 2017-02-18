@@ -53,9 +53,10 @@
 	<div class="container-fluid bg1">
 
 		<div class="page-header text-center">
-			<h1><span class="fa fa-anchor"></span> Welcome <%= user.username %></h1>
+			<!--<h1><span class="fa fa-anchor"></span> Welcome <%= user.username %></h1>-->
+			<h1 id="monthName" class="text-center"></h2>
 			<p>
-				What did you do today?
+				Here's your planned schedule for tomorrow.
 			</p>
 			<a href="/logout" class="btn btn-default btn-sm" id="signBtnSmall">Logout</a>
 		</div>
@@ -64,22 +65,24 @@
 
 			<div class="col-md-12">
 				<!--This gets the next day's date/time-->
-				<h2 id="monthName" class="text-center"></h2>
 
-				<a class="button circle" href="#">welcome</a>
+
+				<button type="button" id="addBtn" class="btn btn-info btn-circle btn-xl"><i class="glyphicon glyphicon-plus"></i></button>
+
+				<form class="taskForm" id="showForm">
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Task Name:</label>
+				    <input type="text" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
+				  </div>
+
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
 
 				<!--This is where JQuery will insert user's scheduled data-->
-				<div>
-					<table id="userSchedule">
-						<tr>
-							<th>
-								Hours
-							</th>
-							<th>
-								Task
-							</th>
-						</tr>
-					</table>
+				<div id="tasks">
+					<div id="taskFormat">
+						
+					</div>
 				</div>
 
 			</div>

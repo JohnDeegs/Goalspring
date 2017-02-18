@@ -6,7 +6,7 @@ $(document).ready(function () {
   var d = new Date();
 
   //ensuring that the DOM is quicker we store the login form selector within a variable
-  var form = $('#taskForm')
+  var form = $('#showForm');
 
   //again for DOM performance we assing the user's inputted values to variables
   var $tName = "";
@@ -52,6 +52,24 @@ $(document).ready(function () {
   //we can also get the current year easily by calling the getFullYear function from the Date object.
   $("#monthName").html(''+d.getDate()+' '+monthNames[d.getMonth()]+' '+d.getFullYear()+'');
 
+
+  var $showForm = $('#showForm');
+
+  var $addBtn = $('#addBtn');
+
+  $addBtn.click(function(){
+    //$showForm.toggle('slow', function(){
+
+  //  });
+  });
+
+  function submitTask(e){
+
+  }
+
+
+
+
   //Get user's current data if exists
   $.get("http://localhost:8080/tasks", function(data, status){
     //alert("Data: " + data + "\nStatus: " + status);
@@ -69,62 +87,23 @@ $(document).ready(function () {
   form.on('submit', function(e) {
     e.preventDefault(); //prevents form from submitting before our changes
 
-    //Get the user input
-    $tName = $('input[name="task"]').val();
-    $tDuration = $('input[name="duration"]').val();
-    $sTime1 = $('input[name="sTimea"]').val();
-    $sTime2 = $('input[name="sTimeb"]').val();
-    $fTime1 = $('input[name="fTimea"]').val();
-    $fTime2 = $('input[name="fTimeb"]').val();
+    var colors = ['#0066ff', '#ff3300', '#000000'];
 
-    $sTime = ''+$sTime1+':'+$sTime2+'';
+    var randomColor = Math.floor(Math.random() * colors.length);
 
-    //We get the value of the selected radio button category
-    var cVal = $("input[name=category]:checked").attr("data-value").toString();
+    var finalColor = colors[randomColor];
 
-    if(cVal === "Study"){
-      //Append user inputs to schedule
-      $Schedule.append('<tr id="studyRow"><td> '+$tDuration+' <i class="fa fa-book" aria-hidden="true"></i> '+$tName+'</td></tr>');
-      studyArray.push($tDuration);
-    }else if(cVal === "Excercise"){
-      $Schedule.append('<tr id="excerciseRow" style="background-color: #f0ad4e"><td> '+$tDuration+'</td><td><i class="fa fa-futbol-o" aria-hidden="true"></i> '+$tName+'</td></tr>');
-      excerciseArray.push($tDuration);
-    }else{
-      $Schedule.append('<tr id="socialRow" style="background-color: #449d44"><td> '+$tDuration+'</td><td><i class="fa fa-glass" aria-hidden="true"></i> '+$tName+'</td></tr>');
-      socialArray.push($tDuration);
+    colors.splice(randomColor, 1);
+
+    if(colors.length == 0){
+      var colors = ['#0066ff', '#ff3300', '#000000']
     }
 
-    categoryArray.push(cVal);
+    //var randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-    var date;
-    date = new Date();
-    date = date.getUTCFullYear() + '-' +
-    ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-    ('00' + date.getUTCDate()).slice(-2) + ' ' +
-    ('00' + date.getUTCHours()).slice(-2) + ':' +
-    ('00' + date.getUTCMinutes()).slice(-2) + ':' +
-    ('00' + date.getUTCSeconds()).slice(-2);
-    console.log(date);
-
-    /*var data = {};
-    data.task = $tName;
-    data.taskDate = date;
-    data.duration = $tDuration;
-    data.taskID = Math.floor((Math.random() * 1000000) + 1);
-
-					$.ajax({
-						type: 'POST',
-						data: JSON.stringify(data),
-				        contentType: 'application/json',
-                    url: 'http://localhost:8080/create',
-                    success: function(data) {
-                        console.log('success');
-                        console.log(JSON.stringify(data));
-                    }
-                });
-
-    //submit our changes
-    //form.submit();*/
+    var text = $('#text1').val();
+    $('#taskFormat').append('<div id="blockTask"><p>'+text+'</p><p id="smallertext">13:00 - 14:00</p></div>').css('background-color', finalColor).show();
+    //$('#taskFormat').append('<div id="whitespace"></div>');
   });
 
   $removeBtn.click(function(){
