@@ -1,0 +1,195 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>GoalSpring</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="calendar.js"></script>
+	<script type="text/javascript" src="jquery.timepicker.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="calendar.min.css" />
+	<link rel="stylesheet" type="text/css" href="jquery.timepicker.css" />
+</head>
+<body>
+
+	<!--<script type="text/javascript">
+     window.addEventListener('load', function(){
+         alert('<%= user.username %>');
+     });
+	 </script>-->
+
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<a href="#" class="navbar-brand">GoalSpring</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="/">Home</a>
+					</li>
+					<li>
+						<a href="about.html">About</a>
+					</li>
+					<li>
+						<a href="contact.html">Contact</a>
+					</li>
+					<li>
+						<a href="/profile">Calendar</a>
+					</li>
+					<li>
+						<a href="/login" id="signIn">Sign In</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="container-fluid bg1">
+
+		<div class="page-header text-center">
+			<h1><span class="fa fa-anchor"></span> Welcome <%= user.username %></h1>
+			<p>
+				What did you do today?
+			</p>
+			<a href="/logout" class="btn btn-default btn-sm" id="signBtnSmall">Logout</a>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6 col-sm-12">
+
+				<h2 id="taskHeader">Create Task</h2>
+
+				<form id="taskForm">
+						<div class="form-group">
+								<label>Task</label>
+								<input type="text" class="form-control" name="task" id="taskName">
+						</div>
+						<div class="form-group">
+								<label>Duration (Hours)</label>
+								<input type="number" class="form-control" name="duration" id="taskDuration">
+						</div>
+						<div class="form-group">
+							<label>Start Time:</label>
+							<input type="number" class="form-control" name="sTime1" id="sTimea" value="Hour">
+							<input type="number" class="form-control" name="sTime2" id="sTimeb" value="Minute">
+						</div>
+						<div class="form-group">
+							<label>End Time:</label>
+							<input type="number" class="form-control" name="fTime1" id="fTimea" value="Hour">
+							<input type="number" class="form-control" name="fTime2" id="fTimeb" value="Minute">
+						</div>
+						<div class="form-group">
+								<label>Task Category</label>
+								<br />
+								<div class="btn-group" data-toggle="buttons" id="tRadio">
+								  <label class="btn btn-primary active" id="checkBtns">
+								    <input type="radio" name="category" checked autocomplete="off" data-value="Study" id="cStudy">Study
+								  </label>
+								  <label class="btn btn-warning" id="checkBtns">
+								    <input type="radio" name="category" autocomplete="off" data-value="Excercise" id="cExcercise">Excercise
+								  </label>
+								  <label class="btn btn-success" id="checkBtns">
+								    <input type="radio" name="category" autocomplete="off" data-value="Social" id="cSocial">Social
+								  </label>
+								</div>
+						</div>
+
+						<button type="submit" class="btn btn-default" id="subBtn">Submit</button>
+				</form>
+
+				<button class="btn btn-default" id="removeBtn">Remove Last</button>
+
+				<button class="btn btn-default" id="analyzeBtn">Analyze Schedule</button>
+
+				<button class="btn btn-default" id="testBtn">Test</button>
+
+			</div>
+
+			<div class="col-md-6 col-sm-12">
+				<!--This gets the next day's date/time-->
+				<h2 id="monthName" class="text-center"></h2>
+
+				<!--This is where JQuery will insert user's scheduled data-->
+				<div>
+					<table id="userSchedule">
+						<tr>
+							<th>
+								Hours
+							</th>
+							<th>
+								Task
+							</th>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="container-fluid bg2">
+
+		<div class="row">
+
+			<div class="col-sm-12">
+				<h2 class="text-center">Analysis</h2>
+
+				<h3 class="text-center">We have examined your schedule and here are our suggestions for healthy living!</h3>
+			</div>
+
+		</div>
+
+		<hr />
+
+		<div class="row text-center">
+
+			<div class="col-sm-12 col-md-4">
+				<h3>Study</h3>
+
+				<i class="fa fa-book fa-5x" aria-hidden="true"></i>
+
+				<ul id="studyComments">
+				</ul>
+			</div>
+
+			<div class="col-sm-12 col-md-4">
+				<h3 class="text-center">Excercise</h3>
+
+				<i class="fa fa-futbol-o fa-5x" aria-hidden="true"></i>
+
+				<ul id="excerciseComments">
+				</ul>
+			</div>
+
+			<div class="col-sm-12 col-md-4">
+				<h3 class="text-center">Social</h3>
+
+				<i class="fa fa-glass fa-5x" aria-hidden="true"></i>
+
+				<ul id="socialComments">
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

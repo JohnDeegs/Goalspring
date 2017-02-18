@@ -1,0 +1,189 @@
+/* SASS Variables */
+
+$body: #fff;
+$navcolor: #336600;
+$parasize: 18px;
+$bg2backgr: #C0C0C0;
+
+/* PALETTE */
+
+body {
+  background-color: $body;
+}
+
+/* HEADER */
+
+/* NAV BAR */
+
+.navbar{
+    background-color: $navcolor;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navbar a {
+  color: $body;
+  border-radius: 20px;
+}
+
+.navbar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#signIn {
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+.navbar h2{
+  font-size: 40px;
+}
+
+/* CONTENT */
+
+h1, h2, h3{
+  font-weight: 700;
+}
+
+h1, h2{
+  font-size: 50px;
+}
+
+h3{
+  font-size: 40px;
+}
+
+p{
+  font-size: 22px;
+  font-weight: 350;
+}
+
+//bg1 specific
+
+#jumboHead {
+  margin-top: 15px;
+}
+
+.bg1 {
+  height: 100%;
+  padding-bottom: 20px;
+}
+
+.bg1 h1{
+  margin-top: 75px;
+}
+
+.bg1 h3{
+  margin-top: 75px;
+}
+
+//bg2 specific
+
+.bg2{
+  height: 100%;
+  background-color: #C0C0C0;
+}
+
+.bg2 img {
+  margin: 0 auto;
+  display: block;
+  width: 70%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.bg2 h3{
+  margin-bottom: 25px;
+}
+
+.bg2 p {
+  margin-bottom: 25px;
+}
+
+/*SCHEDULE*/
+
+#studyRow {
+  color: #fff;
+  opacity: 0.7;
+  background-color: #428bca;
+  width: 90%;
+  font-size: 16px;
+}
+#studyRow td {
+  width: 99.99%;
+}
+
+.button{
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: "Segoe UI";
+  letter-spacing: 1px;
+
+  &:before{
+    border-radius: @circle-size;
+    border: @outside-circle-border solid #468cdc;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.15), 0 0 15px rgba(0, 255, 204, 0.15) inset;
+    content: "";
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: @outside-circle-size;
+    width: @outside-circle-size;
+    margin-left: @outside-circle-margin;
+    margin-top: @outside-circle-margin;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 300ms;
+  }
+
+  &:hover:before{
+    transform: scale(1.05);
+  }
+
+  &.circle{
+    background: #23466e;
+    border: none;
+    border-radius: 900px;
+    color: #e4ecfa;
+    cursor: pointer;
+    display: block;
+    width: @circle-size;
+    height: @circle-size;
+    line-height: @circle-size;
+    position: relative;
+    margin: auto;
+    margin-top: 25px;
+    transition: 0.5s;
+
+    &:hover {
+      background: #3e70aa;
+      padding: -2px;
+    }
+  }
+}
+
+/* FOOTER */
+
+/* FORMS */
+
+/* OTHER */
+
+@media (min-width: 570px){
+  .bg2 h2 {
+    text-align: center;
+  }
+
+  .bg2 img {
+    height: 100%;
+  }
+
+  ul{
+    margin-bottom: 30px;
+  }
+}
