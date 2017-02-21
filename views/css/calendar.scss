@@ -131,7 +131,11 @@ p{
 }
 
 .taskForm {
-  //display: none;
+  display: none;
+}
+
+ul{
+  list-style: none;
 }
 
 #tasks {
@@ -145,24 +149,23 @@ p{
   display: none;
 }
 
-#blockTask {
-  padding-top: 10px;
-  height: 80px;
+#taskBlock {
+  height: 60px;
   width: 100%;
   border: none;
   border-radius: 3px;
-  margin: 0 auto;
-  display: block;
-  color: #ffffff;
+  margin-top: 20px;
+  color: #000000;
   font-size: 18px;
 }
 
-#blockTask p {
-
+#taskBlock p {
+margin-left: 15px;
 }
 
 #smallertext{
   font-size: 14px;
+  padding-bottom: 15px;
 }
 
 #whitespace {

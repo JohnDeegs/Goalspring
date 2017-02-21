@@ -49,6 +49,13 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 
+app.use(function (req, res, next){
+	if(req.headers['x-forwarded-proto'] === 'https'){
+		res.redirect('http://' + req.hostname + req.url);
+	}else{
+		next();
+	}
+});
 
 app.listen(port);
 console.log('The magic happens on port ' + port);

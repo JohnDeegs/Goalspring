@@ -58,9 +58,9 @@ $(document).ready(function () {
   var $addBtn = $('#addBtn');
 
   $addBtn.click(function(){
-    //$showForm.toggle('slow', function(){
+    $showForm.toggle('slow', function(){
 
-  //  });
+    });
   });
 
   function submitTask(e){
@@ -87,13 +87,13 @@ $(document).ready(function () {
   form.on('submit', function(e) {
     e.preventDefault(); //prevents form from submitting before our changes
 
-    var colors = ['#0066ff', '#ff3300', '#000000'];
+    var colors = ['#0066ff', '#ff3300', 'blue'];
 
     var randomColor = Math.floor(Math.random() * colors.length);
 
     var finalColor = colors[randomColor];
 
-    colors.splice(randomColor, 1);
+    //colors.splice(randomColor, 1);
 
     if(colors.length == 0){
       var colors = ['#0066ff', '#ff3300', '#000000']
@@ -102,7 +102,10 @@ $(document).ready(function () {
     //var randomColor = colors[Math.floor(Math.random() * colors.length)];
 
     var text = $('#text1').val();
-    $('#taskFormat').append('<div id="blockTask"><p>'+text+'</p><p id="smallertext">13:00 - 14:00</p></div>').css('background-color', finalColor).show();
+    var type = $('#text2').val();
+
+    $('#taskList').append('<div id="taskBlock" style="background-color: '+colors[randomColor]+';"><p>'+text+'</p><p id="smallertext">13:00 - 14:00</p></div>').show();
+
     //$('#taskFormat').append('<div id="whitespace"></div>');
   });
 

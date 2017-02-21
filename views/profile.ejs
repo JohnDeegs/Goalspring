@@ -58,6 +58,9 @@
 			<p>
 				Here's your planned schedule for tomorrow.
 			</p>
+			<p>
+				<a>Change Date?</a>
+			</p>
 			<a href="/logout" class="btn btn-default btn-sm" id="signBtnSmall">Logout</a>
 		</div>
 
@@ -74,16 +77,20 @@
 				    <label for="exampleInputEmail1">Task Name:</label>
 				    <input type="text" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
 				  </div>
+					<div class="form-group">
+						<label for="inputType">Type:</label>
+						<input type="text" class="form-control" id="text2" aria-describedby="textHelp" placeholder="Enter Type">
+					</div>
 
 				  <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 
+				<i>This is where your total is.</i>
+
 				<!--This is where JQuery will insert user's scheduled data-->
-				<div id="tasks">
-					<div id="taskFormat">
-						
-					</div>
-				</div>
+				<div id="taskList">
+
+				</ul>
 
 			</div>
 
