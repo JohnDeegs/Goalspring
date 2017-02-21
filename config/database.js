@@ -1,11 +1,10 @@
 // config/database.js
 module.exports = {
     'connection': {
-        'host': 'localhost',
-        'user': 'root',
-        'password': '',
-        'socketPath': '/Applications/MAMP/tmp/mysql/mysql.sock'
+        'host': 'us-cdbr-iron-east-04.cleardb.net',
+        'user': 'b74d68f5eda681',
+        'password': '7e304855'
     },
-	'database': 'my_schema',
-    'users_table': 'users'
+	'database': 'heroku_48633fb70d7d1e2',
+  'users_table': 'users'
 };

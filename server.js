@@ -5,6 +5,7 @@
 var express  = require('express');
 var session  = require('express-session');
 var cookieParser = require('cookie-parser');
+var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var app      = express();

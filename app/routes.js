@@ -4,10 +4,10 @@ module.exports = function(app, passport) {
 	var mysql = require('mysql');
 
 	var connection = mysql.createConnection({
-		host : "localhost",
-		user : "root",
-		password : '',
-		database : 'my_schema'
+		host: 'us-cdbr-iron-east-04.cleardb.net',
+		user: 'b74d68f5eda681',
+		password: '7e304855',
+		database : 'heroku_48633fb70d7d1e2'
 	});
 
 	connection.connect();
