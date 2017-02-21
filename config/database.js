@@ -3,7 +3,8 @@ module.exports = {
     'connection': {
         'host': 'localhost',
         'user': 'root',
-        'password': ''
+        'password': '',
+        'socketPath': '/Applications/MAMP/tmp/mysql/mysql.sock'
     },
 	'database': 'my_schema',
     'users_table': 'users'
