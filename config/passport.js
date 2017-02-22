@@ -13,6 +13,7 @@ connection.query('USE ' + dbconfig.database);
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
+//This is a fix for the cleardb server shutting down if not used for a few minutes which makes the heroku app crash, keeps the db connection active
   setInterval(function () {
       connection.query('SELECT 1');
   }, 5000);
