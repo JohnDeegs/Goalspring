@@ -8,12 +8,20 @@
 
 	<title>GoalSpring</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
 	<script type="text/javascript" src="calendar.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="calendar.min.css" />
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
 </head>
 <body>
 
@@ -54,14 +62,17 @@
 
 		<div class="page-header text-center">
 			<!--<h1><span class="fa fa-anchor"></span> Welcome <%= user.username %></h1>-->
-			<h2 id="monthName" class="text-center"></h2>
+			<h1 id="monthName" class="text-center"></h1>
+
 			<p>
 				Here's your planned schedule for tomorrow.
 			</p>
+
 			<p>
-				<a>Change Date?</a>
+				Change Date?
 			</p>
-			<a href="/logout" class="btn btn-default btn-sm" id="signBtnSmall">Logout</a>
+			<input type="text" id="datepicker">
+
 		</div>
 
 		<div class="row">
@@ -82,14 +93,16 @@
 				    <input type="text" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
 				  </div>
 					<div class="form-group">
-						<label for="inputType">Type:</label>
-						<input type="text" class="form-control" id="text2" aria-describedby="textHelp" placeholder="Enter Type">
+						<label for="inputType">Start Time:</label>
+						<input type="text" class="form-control" id="text2" aria-describedby="textHelp" placeholder="Enter Time">
+					</div>
+					<div class="form-group">
+						<label for="inputType">Finish Time:</label>
+						<input type="text" class="form-control" id="text3" aria-describedby="textHelp" placeholder="Enter Time">
 					</div>
 
 				  <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
-
-				<i>This is where your total is.</i>
 
 			</div>
 

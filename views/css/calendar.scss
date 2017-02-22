@@ -104,6 +104,11 @@ p{
 
 /*SCHEDULE*/
 
+#signBtnSmall {
+  margin-top: 15px;
+  position: relative;
+}
+
 #studyRow {
   color: #fff;
   opacity: 0.7;
@@ -130,6 +135,14 @@ p{
   opacity: 0.8;
 }
 
+#addBtn {
+  margin-top: 10px;
+}
+
+#datepicker {
+
+}
+
 .taskForm {
   display: none;
 }
@@ -152,9 +165,9 @@ ul{
 #taskBlock {
   height: 60px;
   width: 100%;
-  border: none;
-  border-radius: 3px;
-  margin-top: 20px;
+  border: 1px;
+  border-radius: 5px;
+  margin-top: 10px;
   color: #ffffff;
   font-size: 18px;
 }
@@ -165,7 +178,8 @@ margin-left: 15px;
 
 #smallertext{
   font-size: 14px;
-  padding-bottom: 15px;
+  position: relative;
+    bottom: 10px;
 }
 
 #whitespace {
