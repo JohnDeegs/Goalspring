@@ -54,7 +54,7 @@
 
 		<div class="page-header text-center">
 			<!--<h1><span class="fa fa-anchor"></span> Welcome <%= user.username %></h1>-->
-			<h1 id="monthName" class="text-center"></h2>
+			<h2 id="monthName" class="text-center"></h2>
 			<p>
 				Here's your planned schedule for tomorrow.
 			</p>
@@ -69,6 +69,10 @@
 			<div class="col-md-12">
 				<!--This gets the next day's date/time-->
 
+				<!--This is where JQuery will insert user's scheduled data-->
+				<div id="taskList">
+
+				</div>
 
 				<button type="button" id="addBtn" class="btn btn-info btn-circle btn-xl"><i class="glyphicon glyphicon-plus"></i></button>
 
@@ -87,16 +91,13 @@
 
 				<i>This is where your total is.</i>
 
-				<!--This is where JQuery will insert user's scheduled data-->
-				<div id="taskList">
-
-				</ul>
-
 			</div>
 
 		</div>
 
 	</div>
+
+</div>
 
 </body>
 </html>
