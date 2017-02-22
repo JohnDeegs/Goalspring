@@ -57,6 +57,8 @@ $(document).ready(function () {
 
   var $addBtn = $('#addBtn');
 
+
+
   $addBtn.click(function(){
     $showForm.toggle('slow', function(){
 
@@ -79,6 +81,8 @@ $(document).ready(function () {
   $.get("http://localhost:8080/tasks", function(data, status){
     //alert("Data: " + data + "\nStatus: " + status);
     var keys = Object.keys(data);
+
+    console.log(keys);
 
     for(var i = 0; i < keys.length; i++){
       var val = data[keys[i]];
