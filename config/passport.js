@@ -13,6 +13,10 @@ connection.query('USE ' + dbconfig.database);
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
+  setInterval(function () {
+      connection.query('SELECT 1');
+  }, 5000);
+
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================

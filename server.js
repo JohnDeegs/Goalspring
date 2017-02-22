@@ -49,10 +49,9 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 
-var http = require("http");
-setInterval(function() {
-    http.get("https://still-stream-97435.herokuapp.com");
-}, 300000); // every 5 minutes (300000)
+setInterval(function () {
+    db.query('SELECT 1');
+}, 5000);
 
 app.use(function (req, res, next){
 	if(req.headers['x-forwarded-proto'] === 'https'){

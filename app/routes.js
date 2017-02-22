@@ -12,6 +12,10 @@ module.exports = function(app, passport) {
 
 	connection.connect();
 
+	setInterval(function () {
+	    connection.query('SELECT 1');
+	}, 5000);
+
 	// =====================================
 	// Home (with login links)
 	// =====================================
@@ -114,7 +118,6 @@ module.exports = function(app, passport) {
 	app.get('/logout', function(req, res) {
 		req.logout();
 		//res.redirect('/');
-		connection.destroy();
 		res.render('index.ejs'); // load the index.ejs file
 	});
 };
