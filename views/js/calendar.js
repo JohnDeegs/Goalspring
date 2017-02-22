@@ -102,12 +102,6 @@ $(document).ready(function () {
 
     var finalColor = colors[randomColor];
 
-    colors = colors.splice(randomColor, 1);
-
-    if(colors.length == 0){
-      colors = ['#ffad33', '#9999ff', '#4db8ff'];
-    }
-
     //colors.splice(randomColor, 1);
 
     if(colors.length == 0){
