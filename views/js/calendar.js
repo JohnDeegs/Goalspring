@@ -72,8 +72,8 @@ $(document).ready(function () {
     });
   });
 
-  $('#text2').timepicker();
-  $('#text3').timepicker();
+  $('#text2').timepicker({ 'scrollDefault': 'now' });
+  $('#text3').timepicker({ 'scrollDefault': 'now' });
 
   //Get user's current data if exists
   $.get("http://localhost:8080/tasks", function(data, status){
