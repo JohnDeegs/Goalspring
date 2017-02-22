@@ -92,7 +92,7 @@ $(document).ready(function () {
   form.on('submit', function(e) {
     e.preventDefault(); //prevents form from submitting before our changes
 
-    var colors = ['#0066ff', '#ff3300', 'blue'];
+    var colors = ['#ffad33', '#9999ff', '#4db8ff'];
 
     var randomColor = Math.floor(Math.random() * colors.length);
 
