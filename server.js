@@ -14,7 +14,6 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 
 // configuration ===============================================================
-// connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 

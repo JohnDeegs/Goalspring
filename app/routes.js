@@ -54,6 +54,8 @@ module.exports = function(app, passport) {
 	// =====================================
 	// SIGNUP
 	// =====================================
+
+
 	// show the signup form
 	app.get('/signup', function(req, res) {
 		// render the page and pass in any flash data if it exists
@@ -67,9 +69,12 @@ module.exports = function(app, passport) {
 		failureFlash : true // allow flash messages
 	}));
 
+
 	// =====================================
 	// PROFILE SECTION
 	// =====================================
+
+
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
@@ -88,7 +93,7 @@ module.exports = function(app, passport) {
 
 		var id = req.user.id;
 
-		connection.query("SELECT * from tasks where id = ?", id, function(err, result){
+		connection.query("SELECT * from tasks where user_id = ?", id, function(err, result){
 			if(err) throw err;
 			res.send("Recieved "+JSON.stringify(result));
 		});
@@ -116,6 +121,8 @@ module.exports = function(app, passport) {
 	// =====================================
 	// LOGOUT
 	// =====================================
+
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		//res.redirect('/');
