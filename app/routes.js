@@ -102,7 +102,7 @@ module.exports = function(app, passport) {
 	app.post('/create', isLoggedIn, function(req, res){
 
 		var data = {};
-		data.taskID = req.body.taskID;
+		data.taskID = req.body.taskID;	
 		data.title = req.body.task;
 		data.taskDate = req.body.taskDate;
 		data.duration = req.body.duration;
