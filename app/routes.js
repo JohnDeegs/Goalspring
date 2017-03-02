@@ -102,17 +102,19 @@ module.exports = function(app, passport) {
 	app.post('/create', isLoggedIn, function(req, res){
 
 		var data = {};
-		data.taskID = req.body.taskID;	
-		data.title = req.body.task;
-		data.taskDate = req.body.taskDate;
-		data.duration = req.body.duration;
-		data.id = req.user.id;
+
+		data.name = req.body.name;
+		data.start = req.body.start;
+		data.end = req.body.end;
+		data.user_id = req.user.id;
+
 
 		console.log(data);
 
 		connection.query("INSERT into tasks set ?", data, function(err, result){
 			if(err) throw err;
 			res.send("Created "+JSON.stringify(result));
+			console.log("All good")
 		});
 
 	});
