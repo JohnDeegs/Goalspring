@@ -83,23 +83,18 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/profile/createtask', isLoggedIn, function(req, res) {
-		res.render('createtask.ejs', {
-			user : req.user // get the user out of session and pass to template
-		});
-	});
-
-	app.get('/tasks', isLoggedIn, function(req, res){
+	app.get('/tasks/list', isLoggedIn, function(req, res){
 
 		var id = req.user.id;
 
 		connection.query("SELECT * from tasks where user_id = ?", id, function(err, result){
 			if(err) throw err;
-			res.send("Recieved "+JSON.stringify(result));
+
+			res.send(JSON.stringify(result));
 		});
 	});
 
-	app.post('/create', isLoggedIn, function(req, res){
+	app.post('/tasks/create', isLoggedIn, function(req, res){
 
 		var data = {};
 
