@@ -78,41 +78,102 @@ module.exports = function(app, passport) {
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user : req.user // get the user out of session and pass to template
+
+		var user_id = req.user.id;
+
+		var foo = "Ola!";
+
+		connection.query("SELECT * FROM tasks where user_id = ? ORDER BY start DESC", user_id, function(err, result){
+			if(!!err){
+				console.log("Error selecting data from db");
+			}else{
+				res.render('profile.ejs', {
+					dbdata: result,
+					example: foo,
+					user : req.user // get the user out of session and pass to template
+				});
+				console.log("Success getting db data");
+			}
 		});
+
+
 	});
 
-	app.get('/tasks/list', isLoggedIn, function(req, res){
-
-		var id = req.user.id;
-
-		connection.query("SELECT * from tasks where user_id = ?", id, function(err, result){
-			if(err) throw err;
-
-			res.send(JSON.stringify(result));
+	// we will want this protected so you have to be logged in to visit
+	// we will use route middleware to verify this (the isLoggedIn function)
+	app.get('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
+		//grabs the id from the parameters
+		var id = req.params.id;
+		//selects the task by specific id
+		connection.query("SELECT * FROM tasks WHERE id = ?", [id], function(err, rows){
+			if(!!err){
+				console.log("Error selecting");
+			}else{
+				//renders the edit task page with that specific data if true
+				res.render('edit.ejs', {page_title: "Edit Customers"});
+				console.log("Success getting task");
+			}
 		});
+
 	});
 
-	app.post('/tasks/create', isLoggedIn, function(req, res){
+	// we will want this protected so you have to be logged in to visit
+	// we will use route middleware to verify this (the isLoggedIn function)
+	app.post('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
+
+
+	});
+
+// GET Tasks
+
+	app.get('api/tasks/list', isLoggedIn, function(req, res){
+
+	});
+
+	// CREATE
+
+	/*
+			This takes the name attributes of the inputs from profile.ejs and on form submit these values are passed here.
+			Created a new object called data, which I pass in the values collected from profile.ejs.
+			From here, I insert them into my database with the corresponding name/value pairs.
+			After the data insertion, we redirect to /profile
+	 */
+
+	app.post('/api/tasks/create', isLoggedIn, function(req, res){
+
+		console.log("Hey Yo");
 
 		var data = {};
 
 		data.name = req.body.name;
+		data.category = req.body.category;
 		data.start = req.body.start;
-		data.end = req.body.end;
+		data.end = req.body.finish;
 		data.user_id = req.user.id;
-
 
 		console.log(data);
 
 		connection.query("INSERT into tasks set ?", data, function(err, result){
 			if(err) throw err;
-			res.send("Created "+JSON.stringify(result));
+			res.redirect("/profile");
 			console.log("All good")
 		});
 
 	});
+
+	app.get('/api/tasks/delete/:id', isLoggedIn, function(req, res){
+		var id = req.params.id;
+
+		connection.query("DELETE FROM tasks WHERE id = ?", [id], function(err, rows){
+			if(!!err){
+				console.log("Error deleting");
+			}else {
+				console.log("Success deleting");
+				res.redirect('/profile');
+			}
+		});
+	});
+
 
 
 	// =====================================

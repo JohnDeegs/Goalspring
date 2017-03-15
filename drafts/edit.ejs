@@ -1,0 +1,85 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>GoalSpring</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
+	<script type="text/javascript" src="../profile.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../../edit.min.css" />
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<a href="#" class="navbar-brand">GoalSpring</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="/">Home</a>
+					</li>
+					<li>
+						<a href="about.html">About</a>
+					</li>
+					<li>
+						<a href="contact.html">Contact</a>
+					</li>
+					<li>
+						<a href="/profile">Calendar</a>
+					</li>
+					<li>
+						<a href="/login" id="signIn">Sign In</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="container-fluid bg1">
+
+    <form id="editForm">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Task Name:</label>
+        <input type="text" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
+      </div>
+      <div class="form-group">
+        <label for="inputType">Start Time:</label>
+        <input type="text" class="form-control" id="text2" aria-describedby="textHelp" placeholder="Enter Time">
+      </div>
+      <div class="form-group">
+        <label for="inputType">Finish Time:</label>
+        <input type="text" class="form-control" id="text3" aria-describedby="textHelp" placeholder="Enter Time">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+	</div>
+
+</div>
+
+</body>
+</html>

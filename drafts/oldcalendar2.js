@@ -66,7 +66,7 @@ form.on('submit', function(e) {
   if(sCheck > fCheck){
     alert("There's no flux capacitor to take you back in time here!");
   }else{
-  $('#taskList').append('<div id="taskBlock" style="background-color: '+colors[randomColor]+';"><p>'+text+'</p><p id="smallertext">'+sTime+' - '+fTime+'</p></div>').show();
+    $('#taskList').append('<div id="taskBlock" style="background-color: '+colors[randomColor]+';"><p>'+text+'</p><p id="smallertext">'+sTime+' - '+fTime+'</p></div>').show();
   }
 
   //$('#taskFormat').append('<div id="whitespace"></div>');
