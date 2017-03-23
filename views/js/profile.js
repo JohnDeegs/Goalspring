@@ -31,6 +31,13 @@ $(document).ready(function(){
     var sTime = $('#text2').val();
     var fTime = $('#text3').val();
 
+    //if theres no time selected for the start or finish, we return
+
+    if(sTime === "" || fTime === ""){
+      console.log("No time selected");
+      return false;
+    }
+
     //get current date
     var d = new Date();
 
@@ -112,49 +119,68 @@ $(document).ready(function(){
 
     var optionToString = $('#sel1 option:selected').val();
 
-    $('#text2').val(convertTime(sTime));
-    $('#text3').val(convertTime(fTime));
-    $('#sel').val(optionToString);
+    //We create our MySql dates using the convertTime function
 
-    $('#showForm').submit();
+    var finalStart = convertTime(sTime);
+    var finalFinish = convertTime(fTime);
+
+    //Now lets do some error handling, convert the mySQL datetimes back to JS for examination
+
+    function convertToJsDate(mySqlArg){
+      //splits timestamp
+      var t = mySqlArg.split(/[- :]/);
+
+      var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+
+      return d;
+
+    }
+
+    console.log(convertToJsDate(finalStart));
+
+    //Asign these variables with the MySqlTimeDate in JS Date time
+
+    var test1 = convertToJsDate(finalStart);
+
+    var test2 = convertToJsDate(finalFinish);
+
+    //Get the value of the name of the task
+
+    var name = $('#text1').val();
+
+    //if the name is blank, then the task is not made and we return
+
+    if(name === ""){
+      console.log("You didn't enter a name!");
+      return false;
+    }
+
+    //get the value of the category
+
+    var category = $('#sel1').val();
+
+    //if there is no category selected, then the task is not made and we return
+
+    if(category === ""){
+      console.log("There is no category selected");
+      return false;
+    }
+
+    //if the start time is further in time than the finish time, the task is not made and we return
+
+    //if this criteria is met, then the form is submitted.
+
+    if(test1 >= test2){
+      console.log("You can't go back in time Marty McFly!");
+      return false;
+    }else{
+      $('#text2').val(finalStart);
+      $('#text3').val(finalFinish);
+      $('#sel').val(optionToString);
+
+      $('#showForm').submit();
+    }
 
   });
-
-  /*var sCheck = sTime.charAt(0);
-  var fCheck = fTime.charAt(0);
-
-  sCheck = parseInt(sCheck);
-  fCheck = parseInt(fCheck);
-
-  if(sCheck > fCheck){
-    alert("There's no flux capacitor to take you back in time here!");
-  }*/
-
-/*  $("#submitTaskBtn").click(function(){
-
-    console.log("We clicked the button");
-
-    var taskData = {};
-
-
-    var formData = JSON.stringify($("#myForm").serializeArray());
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:8080/api/tasks/create",
-        data: formData,
-        contentType: "application/json",
-        dataType: "json",
-        success: function(data){
-          console.log(data);
-          console.log("Posted the data!");
-        },
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-  });
-
-
-});*/
 
 });

@@ -1,0 +1,180 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>GoalSpring</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
+	<script type="text/javascript" src="../../../profile.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../edit.min.css" />
+
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<a href="#" class="navbar-brand">GoalSpring</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="/">Home</a>
+					</li>
+					<li>
+						<a href="about.html">About</a>
+					</li>
+					<li>
+						<a href="contact.html">Contact</a>
+					</li>
+					<li>
+						<a href="/profile">Calendar</a>
+					</li>
+					<li>
+						<a href="/login" id="signIn">Sign In</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+		<!-- Modal -->
+	<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+	     aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <!-- Modal Header -->
+	            <div class="modal-header">
+	                <button type="button" class="close"
+	                   data-dismiss="modal">
+	                       <span aria-hidden="true">&times;</span>
+	                       <span class="sr-only">Close</span>
+	                </button>
+	                <h4 class="modal-title" id="myModalLabel">
+	                    Modal title
+	                </h4>
+	            </div>
+
+	            <!-- Modal Body -->
+	            <div class="modal-body">
+
+	                <form class="form-horizontal" role="form">
+	                  <div class="form-group">
+	                    <label  class="col-sm-2 control-label"
+	                              for="inputEmail3">Email</label>
+	                    <div class="col-sm-10">
+	                        <input type="email" class="form-control"
+	                        id="inputEmail3" placeholder="Email"/>
+	                    </div>
+	                  </div>
+	                  <div class="form-group">
+	                    <label class="col-sm-2 control-label"
+	                          for="inputPassword3" >Password</label>
+	                    <div class="col-sm-10">
+	                        <input type="password" class="form-control"
+	                            id="inputPassword3" placeholder="Password"/>
+	                    </div>
+	                  </div>
+	                  <div class="form-group">
+	                    <div class="col-sm-offset-2 col-sm-10">
+	                      <div class="checkbox">
+	                        <label>
+	                            <input type="checkbox"/> Remember me
+	                        </label>
+	                      </div>
+	                    </div>
+	                  </div>
+	                  <div class="form-group">
+	                    <div class="col-sm-offset-2 col-sm-10">
+	                      <button type="submit" class="btn btn-default">Sign in</button>
+	                    </div>
+	                  </div>
+	                </form>
+	            </div>
+
+	            <!-- Modal Footer -->
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default"
+	                        data-dismiss="modal">
+	                            Close
+	                </button>
+	                <button type="button" class="btn btn-primary">
+	                    Save changes
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="container-fluid bg1">
+
+		<div id="taskList">
+
+			<!-- This loops througb the data I've sent from the routes folder -->
+						<% for(var i = 0; i < dbdata.length; i++){%>
+							<p>
+								<%= dbdata[i].name;%>
+							</p>
+
+							<a href="/api/tasks/edit/<%=dbdata[i].id%>">Edit me</a>
+							<a href="/api/tasks/delete/<%=dbdata[i].id%>">Delete me</a>
+
+						<%} %>
+
+		</div>
+
+		<form class="taskForm" id="showForm" method="post" action="/api/tasks/create">
+			<div class="form-group">
+				<label for="inputType">Task Name:</label>
+				<input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
+			</div>
+
+			<div class="form-group">
+				<label for="sel1">Category:</label>
+				<select name="category" class="form-control" id="sel1">
+					<option>Productive</option>
+					<option>Sleep</option>
+					<option>Bare Neccessity</option>
+					<option>Break</option>
+					<option>Excercise</option>
+					<option>School</option>
+					<option>Socialise</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="inputType">Start Time:</label>
+				<input type="text" name="start" class="form-control" id="text2" aria-describedby="textHelp" placeholder="Enter Time">
+			</div>
+
+			<div class="form-group">
+				<label for="inputType">Finish Time:</label>
+				<input type="text" name="finish" class="form-control" id="text3" aria-describedby="textHelp" placeholder="Enter Time">
+			</div>
+
+			<button type="submit" id="submitTaskBtn" class="btn btn-primary">Submit</button>
+		</form>
+
+	</div>
+
+</div>
+
+</body>
+</html>

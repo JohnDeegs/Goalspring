@@ -18,11 +18,65 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
-  	<link rel="stylesheet" type="text/css" href="edit.min.css" />
+  	<link rel="stylesheet" type="text/css" href="../../../edit.min.css" />
   </head>
   <body>
 
-    <h1>Edit Page</h1>
+    <!--navbar-->
+
+    <div class="navbar navbar-fixed-top">
+  		<div class="container-fluid">
+
+  			<div class="navbar-header">
+  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+  					<i class="fa fa-bars" aria-hidden="true"></i>
+  				</button>
+  				<a href="#" class="navbar-brand">GoalSpring</a>
+  			</div>
+
+  			<div class="collapse navbar-collapse">
+  				<ul class="nav navbar-nav navbar-right">
+  					<li class="active">
+  						<a href="/">Home</a>
+  					</li>
+  					<li>
+  						<a href="about.html">About</a>
+  					</li>
+  					<li>
+  						<a href="contact.html">Contact</a>
+  					</li>
+  					<li>
+  						<a href="/profile">Calendar</a>
+  					</li>
+  					<li>
+  						<a href="/login" id="signIn">Sign In</a>
+  					</li>
+  				</ul>
+  			</div>
+
+  		</div>
+  	</div>
+
+    <!--end of navbar-->
+
+    <!--bg1-->
+
+    <h1 id="jumboHead">Edit</h1>
+
+    <div class="container-fluid bg1">
+
+      <form class="taskForm" id="showForm" method="post" action="/api/tasks/edit/<%=dbdata[0].id%>">
+        <div class="form-group">
+          <label for="inputType">Task Name:</label>
+          <input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp" value="<%=dbdata[0].name%>">
+        </div>
+
+
+
+        <button type="submit" id="submitTaskBtn" class="btn btn-primary">Submit</button>
+      </form>
+
+    </div>
 
   </body>
 </html>

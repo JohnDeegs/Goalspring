@@ -21,6 +21,7 @@ module.exports = function(app, passport) {
 	// Home (with login links)
 	// =====================================
 	app.get('/', function(req, res) {
+
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
@@ -81,7 +82,9 @@ module.exports = function(app, passport) {
 
 		var user_id = req.user.id;
 
-		var foo = "Ola!";
+		var someDate = new Date();
+
+		//someDate.setDate(someDate.getDate());
 
 		connection.query("SELECT * FROM tasks where user_id = ? ORDER BY start DESC", user_id, function(err, result){
 			if(!!err){
@@ -89,7 +92,7 @@ module.exports = function(app, passport) {
 			}else{
 				res.render('profile.ejs', {
 					dbdata: result,
-					example: foo,
+					today: someDate,
 					user : req.user // get the user out of session and pass to template
 				});
 				console.log("Success getting db data");
@@ -99,18 +102,63 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.get('/api/tasks/show/:id', isLoggedIn, function(req, res){
+		//get the params that we created in landing.js
+		var id = req.params.id;
+		//split the date in params for further manipulation
+		var str = id.split("");
+		//get the first two digits of param which contains the days
+		var days = ''+str[0]+''+str[1]+'';
+		//get the next two digits which contain the months
+		var month = ''+str[2]+''+str[3]+'';
+		//get the final 4 digits which contain the year
+		var year = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
+		//put them together for mysql datetime format
+		//creating two for the query
+		var formattedDate = ''+year+'-'+month+'-'+days+' 00:00:00';
+		var endDate = ''+year+'-'+month+'-'+days+' 23:59:59';
+
+		//console.log(str);
+		//console.log(days);
+		//console.log(year);
+		//console.log(formattedDate);
+
+		//getting the users identity
+		var user_id = req.user.id;
+
+		//console.log(id);
+
+		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ?", [user_id, formattedDate, endDate], function(err, result){
+			if(!!err){
+				console.log("Error selecting data from db");
+			}else{
+				res.render('tasks.ejs', {
+					dbdata: result,
+					user : req.user // get the user out of session and pass to template
+				});
+				console.log("Success getting db data");
+			}
+		});
+
+	});
+
+
+
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
 		//grabs the id from the parameters
 		var id = req.params.id;
 		//selects the task by specific id
-		connection.query("SELECT * FROM tasks WHERE id = ?", [id], function(err, rows){
+		connection.query("SELECT * FROM tasks WHERE id = ?", [id], function(err, result){
 			if(!!err){
 				console.log("Error selecting");
 			}else{
 				//renders the edit task page with that specific data if true
-				res.render('edit.ejs', {page_title: "Edit Customers"});
+				res.render('edit.ejs', {
+					dbdata: result,
+					user: req.user //get user out of the session and pass to template
+				});
 				console.log("Success getting task");
 			}
 		});
@@ -121,14 +169,28 @@ module.exports = function(app, passport) {
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.post('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
 
+		var input = JSON.parse(JSON.stringify(req.body));
+		var id = req.params.id;
+
+		console.log(input);
+		console.log(id);
+
+		var data = {
+			name: input.name
+		};
+
+		connection.query("UPDATE tasks set ? WHERE id = ?", [data, id], function(err, result){
+			if(!!err){
+				console.log("Error inserting data");
+			}else{
+				res.redirect('/profile');
+			}
+		});
 
 	});
 
 // GET Tasks
 
-	app.get('api/tasks/list', isLoggedIn, function(req, res){
-
-	});
 
 	// CREATE
 
@@ -145,10 +207,10 @@ module.exports = function(app, passport) {
 
 		var data = {};
 
-		data.name = req.body.name;
-		data.category = req.body.category;
-		data.start = req.body.start;
-		data.end = req.body.finish;
+		data.name = "Football";
+		data.category = "Productive";
+		data.start = "2017-03-23 01:00:00";
+		data.end = "2017-03-23 03:00:00";
 		data.user_id = req.user.id;
 
 		console.log(data);
