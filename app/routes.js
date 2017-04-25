@@ -102,7 +102,7 @@ module.exports = function(app, passport) {
 
 	});
 
-	app.get('/api/tasks/show/:id', isLoggedIn, function(req, res){
+	app.get('/tasks/day/:id', isLoggedIn, function(req, res){
 		//get the params that we created in landing.js
 		var id = req.params.id;
 		//split the date in params for further manipulation
@@ -144,97 +144,7 @@ module.exports = function(app, passport) {
 
 
 
-	// we will want this protected so you have to be logged in to visit
-	// we will use route middleware to verify this (the isLoggedIn function)
-	app.get('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
-		//grabs the id from the parameters
-		var id = req.params.id;
-		//selects the task by specific id
-		connection.query("SELECT * FROM tasks WHERE id = ?", [id], function(err, result){
-			if(!!err){
-				console.log("Error selecting");
-			}else{
-				//renders the edit task page with that specific data if true
-				res.render('edit.ejs', {
-					dbdata: result,
-					user: req.user //get user out of the session and pass to template
-				});
-				console.log("Success getting task");
-			}
-		});
-
-	});
-
-	// we will want this protected so you have to be logged in to visit
-	// we will use route middleware to verify this (the isLoggedIn function)
-	app.post('/api/tasks/edit/:id', isLoggedIn, function(req, res) {
-
-		var input = JSON.parse(JSON.stringify(req.body));
-		var id = req.params.id;
-
-		console.log(input);
-		console.log(id);
-
-		var data = {
-			name: input.name
-		};
-
-		connection.query("UPDATE tasks set ? WHERE id = ?", [data, id], function(err, result){
-			if(!!err){
-				console.log("Error inserting data");
-			}else{
-				res.redirect('/profile');
-			}
-		});
-
-	});
-
-// GET Tasks
-
-
-	// CREATE
-
-	/*
-			This takes the name attributes of the inputs from profile.ejs and on form submit these values are passed here.
-			Created a new object called data, which I pass in the values collected from profile.ejs.
-			From here, I insert them into my database with the corresponding name/value pairs.
-			After the data insertion, we redirect to /profile
-	 */
-
-	app.post('/api/tasks/create', isLoggedIn, function(req, res){
-
-		console.log("Hey Yo");
-
-		var data = {};
-
-		data.name = "Football";
-		data.category = "Productive";
-		data.start = "2017-03-23 01:00:00";
-		data.end = "2017-03-23 03:00:00";
-		data.user_id = req.user.id;
-
-		console.log(data);
-
-		connection.query("INSERT into tasks set ?", data, function(err, result){
-			if(err) throw err;
-			res.redirect("/profile");
-			console.log("All good")
-		});
-
-	});
-
-	app.get('/api/tasks/delete/:id', isLoggedIn, function(req, res){
-		var id = req.params.id;
-
-		connection.query("DELETE FROM tasks WHERE id = ?", [id], function(err, rows){
-			if(!!err){
-				console.log("Error deleting");
-			}else {
-				console.log("Success deleting");
-				res.redirect('/profile');
-			}
-		});
-	});
+	
 
 
 

@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     //var identifier = i.getString();
 
-    $divBlock.append('<div class="col-sm-4"><a href="/api/tasks/show/'+dayNumber+''+monthNumber+''+y+'"><div class="'+i+'" id="dayBlock"><div id="dayNumber">'+dd+'</div><div id="monthName">'+mm+' '+y+'</div><div id="dayName">'+day+'</div><p>Content</p></div></a></div>');
+    $divBlock.append('<div class="col-sm-4"><a href="/tasks/day/'+dayNumber+''+monthNumber+''+y+'"><div class="'+i+'" id="dayBlock"><div id="dayNumber">'+dd+'</div><div id="monthName">'+mm+' '+y+'</div><div id="dayName">'+day+'</div><p>Content</p></div></a></div>');
   }
 
   console.log(dateArray);

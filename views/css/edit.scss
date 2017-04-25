@@ -60,11 +60,40 @@ p{
   font-weight: 350;
 }
 
+#taskTitle{
+  font-size: 18px;
+}
+
+#taskCat {
+  font-size: 14px;
+}
+
+#oneTask #delBtn{
+  margin-top: 5px;
+}
+
 //bg1 specific
 
-#taskList{
+/*#taskList{
   margin-top: 100px;
+  height: 200px;
+  width: 100%;
+  border: 1px;
+  border-radius: 5px;
+  background-color: #2b5797;
+  color: #fff;
+  font-size: 18px;
+  list-style-type: none;
+}*/
+
+#taskHolder{
+  margin-top: 100px;
+  color: #000;
 }
+
+
+
+
 
 // other content
 
