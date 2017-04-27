@@ -94,6 +94,10 @@ p{
   list-style-type: none;
 }
 
+#dayLink:hover {
+  text-decoration: none;
+}
+
 #dayNumber {
   margin-left: 20px;
   margin-top: 10px;
@@ -108,11 +112,24 @@ p{
 
 #monthName {
   display: inline;
-  margin-left: 50px;
+  margin-left: 30%;
+  text-decoration: none;
 }
 
 #yearName {
   margin-right: 40px;
+}
+
+#textWrapper {
+  width: 100%;
+  background-color: rgba(0,0,0, 0.3);
+}
+
+#content {
+  margin-left: 30%;
+  margin-top: 15px;
+  font-size: 18px;
+  color: #fff !important;
 }
 
 // other content

@@ -1,188 +1,131 @@
-$(document).ready(function(){
+$(document).ready(function() {
+    var dateArray = [];
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    var $divBlock = $('#taskSelector');
 
-  
+    //loop for displaying our next 7 days in sequence
+    for (var i = 0; i < 7; i++) {
 
+        //get current date
 
-  //if the user has no stored data for this date already, then show the modal, if not then go straight to the page
+        var someDate = new Date();
+        var numberOfDaysToAdd = i;
+        someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
-  //$.get("http://localhost:8080/api/tasks/list", function(data, status){
-  //  //selects the json+what i want
-//    var obj = JSON.parse(data);
-//    console.log(obj[0].name);
-//    console.log(obj[0].id);
-//    $("#taskList").append(obj[0].name);
-//  });
+        var dd = someDate.getDate();
+        var mm = someDate.getMonth() + 1;
+        var day = someDate.getDay();
 
-  //To Edit a task
+        var y = someDate.getFullYear();
 
-  $("#addBtn").click(function(){
-    $("#showForm").fadeToggle("slow");
-  });
-
-  $("#editBtn").click(function(){
-
-  });
-
-  //------------------------CREATE----------------------------//
-
-  $('#text2').timepicker({ 'scrollDefault': 'now' });
-  $('#text3').timepicker({ 'scrollDefault': 'now' });
-
-  $('#submitTaskBtn').click(function() {
-
-    var sTime = $('#text2').val();
-    var fTime = $('#text3').val();
-
-    //if theres no time selected for the start or finish, we return
-
-    if(sTime === "" || fTime === ""){
-      console.log("No time selected");
-      return false;
-    }
-
-    //get current date
-    var d = new Date();
-
-    //get current year
-    var year = d.getUTCFullYear();
-
-    //get current month, must add 1 for accurate reading as January is equal to 0
-    var month = d.getUTCMonth() + 1;
-
-    //get current day date
-    var day = d.getDate();
-
-    var testDate = ''+year+'-'+month+'-'+day+'';
-
-    //splits the time string into pieces, so we can select if it's "am" or "pm" later. e.g ["4",":","0","0","p","m"]
-    //selects the last two elements from this array, this will be either ["p", "m"] or ["a", "m"]
-    //joins this split array into a string for verification later "pm" or "am"
-
-    function convertTime(arg){
-      var splitString = arg.split("");
-
-      if(splitString[1] === ":"){
-        splitString.unshift("0");
-      }
-
-      var getAMorPM = splitString.slice(-2).join("");
-
-      var getJqHour = splitString.slice(0, 2).join("");
-
-      var hour = 0;
-
-      if(getAMorPM === "pm"){
-        console.log("Found pm");
-        if(getJqHour == "01"){
-          hour = 13;
-        }else if(getJqHour == "02"){
-          hour = 14;
-        }else if(getJqHour == "03"){
-          hour = 15;
-        }else if(getJqHour == "04"){
-          hour = 16;
-        }else if(getJqHour == "05"){
-          hour = 17;
-        }else if(getJqHour == "06"){
-          hour = 18;
-        }else if(getJqHour == "07"){
-          hour = 19;
-        }else if(getJqHour == "08"){
-          hour = 20;
-        }else if(getJqHour == "09"){
-          hour = 21;
-        }else if(getJqHour == "10"){
-          hour = 22;
-        }else if(getJqHour == "11"){
-          hour = 23;
-        }else if(getJqHour == "12"){
-          hour = 0;
+        if (day === 0) {
+            day = days[6]
+        } else if (day === 1) {
+            day = days[0]
+        } else if (day === 2) {
+            day = days[1]
+        } else if (day === 3) {
+            day = days[2]
+        } else if (day === 4) {
+            day = days[3]
+        } else if (day === 5) {
+            day = days[4]
+        } else if (day === 6) {
+            day = days[5]
+        } else {
+            alert("Error");
+            return false;
         }
-      }else{
-        hour = getJqHour;
-      }
 
-      //We've got the hour, so now we get the minutes of the task
+      //  console.log(day);
 
-      var minutes = splitString.slice(3, 5).join("");
+        if (mm === 1) {
+            mm = months[0]
+        } else if (mm === 2) {
+            mm = months[1]
+        } else if (mm === 3) {
+            mm = months[2]
+        } else if (mm === 4) {
+            mm = months[3]
+        } else if (mm === 5) {
+            mm = months[4]
+        } else if (mm === 6) {
+            mm = months[5]
+        } else if (mm === 7) {
+            mm = months[6]
+        } else if (mm === 8) {
+            mm = months[7]
+        } else if (mm === 9) {
+            mm = months[8]
+        } else if (mm === 10) {
+            mm = months[9]
+        } else if (mm === 11) {
+            mm = months[10]
+        } else if (mm === 12) {
+            mm = months[11]
+        } else {
+            alert("Error!");
+            return false;
+        }
 
-      //The seconds are by default, 00 in all tasks
+        //bring these variables into a format that we can display to the user
+        var monthNumber = someDate.getMonth() + 1;
+        var dayNumber = someDate.getDate();
+        var formattedDate = dd + '-' + monthNumber + '-' + y;
 
-      var seconds = "00";
+        if (dayNumber < 10) {
+            dayNumber = '0' + dayNumber + '';
+        }
 
-      //We put all of these together to insert into our MySQL timestamp
+        if (monthNumber < 10) {
+            monthNumber = '0' + monthNumber + '';
+        }
 
-      var mySqlTime = ''+testDate+' '+hour+':'+minutes+':'+seconds+'';
+        //console.log(dd);
+      //  console.log(days);
 
-      //return the converted time to mysql format
+        dateArray.push(formattedDate);
 
-      return mySqlTime;
+        //get count of tasks
+
+        var taskCount = $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
+             return data.length;
+        });
+
+        $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/'+ dayNumber +''+ monthNumber +''+ y +'"><div class="' + i + '" id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set: '+taskCount()+'</p></div></div></a></div>');
+
+        //var identifier = i.getString();
+
     }
 
-    var optionToString = $('#sel1 option:selected').val();
+  //  console.log(dateArray);
 
-    //We create our MySql dates using the convertTime function
+    $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
+        console.log(data.length);
+    });
 
-    var finalStart = convertTime(sTime);
-    var finalFinish = convertTime(fTime);
+    /*$(".0").click(function(){
+      alert("zero");
+    })
 
-    //Now lets do some error handling, convert the mySQL datetimes back to JS for examination
+    $(".1").click(function(){
+      alert("one");
+    })*/
 
-    function convertToJsDate(mySqlArg){
-      //splits timestamp
-      var t = mySqlArg.split(/[- :]/);
+    //$divBlock.click(function(){
+    //console.log($divBlock.text());
+    //  })
 
-      var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
-
-      return d;
-
-    }
-
-    console.log(convertToJsDate(finalStart));
-
-    //Asign these variables with the MySqlTimeDate in JS Date time
-
-    var test1 = convertToJsDate(finalStart);
-
-    var test2 = convertToJsDate(finalFinish);
-
-    //Get the value of the name of the task
-
-    var name = $('#text1').val();
-
-    //if the name is blank, then the task is not made and we return
-
-    if(name === ""){
-      console.log("You didn't enter a name!");
-      return false;
-    }
-
-    //get the value of the category
-
-    var category = $('#sel1').val();
-
-    //if there is no category selected, then the task is not made and we return
-
-    if(category === ""){
-      console.log("There is no category selected");
-      return false;
-    }
-
-    //if the start time is further in time than the finish time, the task is not made and we return
-
-    //if this criteria is met, then the form is submitted.
-
-    if(test1 >= test2){
-      console.log("You can't go back in time Marty McFly!");
-      return false;
-    }else{
-      $('#text2').val(finalStart);
-      $('#text3').val(finalFinish);
-      $('#sel').val(optionToString);
-
-      $('#showForm').submit();
-    }
-
-  });
-
+    /*$.ajax({
+        url : "/",
+        type: "POST",
+        data: JSON.stringify(dateArray),
+        contentType: "application/json; charset=utf-8",
+        dataType   : "json",
+        success    : function(){
+            console.log("Pure jQuery Pure JS object");
+        }
+    });
+*/
 });

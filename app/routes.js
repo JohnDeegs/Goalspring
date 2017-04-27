@@ -121,7 +121,8 @@ module.exports = function(app, passport) {
 		//console.log(str);
 		//console.log(days);
 		//console.log(year);
-		//console.log(formattedDate);
+		console.log(formattedDate);
+		console.log(endDate);
 
 		//getting the users identity
 		var user_id = req.user.id;
@@ -136,6 +137,44 @@ module.exports = function(app, passport) {
 					dbdata: result,
 					user : req.user // get the user out of session and pass to template
 				});
+				console.log("Success getting db data");
+				console.log(result);
+			}
+		});
+
+	});
+
+	app.get('/tasks/day/count/:id', isLoggedIn, function(req, res){
+		//get the params that we created in landing.js
+		var id = req.params.id;
+		//split the date in params for further manipulation
+		var str = id.split("");
+		//get the first two digits of param which contains the days
+		var days = ''+str[0]+''+str[1]+'';
+		//get the next two digits which contain the months
+		var month = ''+str[2]+''+str[3]+'';
+		//get the final 4 digits which contain the year
+		var year = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
+		//put them together for mysql datetime format
+		//creating two for the query
+		var formattedDate = ''+year+'-'+month+'-'+days+' 00:00:00';
+		var endDate = ''+year+'-'+month+'-'+days+' 23:59:59';
+
+		//console.log(str);
+		//console.log(days);
+		//console.log(year);
+		//console.log(formattedDate);
+
+		//getting the users identity
+		var user_id = req.user.id;
+
+		//console.log(id);
+
+		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
+			if(!!err){
+				console.log("Error selecting data from db");
+			}else{
+				res.send(result);
 				console.log("Success getting db data");
 			}
 		});
@@ -229,7 +268,26 @@ module.exports = function(app, passport) {
 
 	});
 
+	//COUNT
 
+	app.get('/tasks/days/count', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+
+		connection.query("SELECT count(*) from tasks where user_id = ?", user_id, function(err, result){
+
+			if(!err){
+				console.log("Error getting data!");
+				return;
+			}else{
+				console.log("Success getting count");
+				res.send(result);
+			}
+
+		});
+
+
+	})
 
 
 	// =====================================
