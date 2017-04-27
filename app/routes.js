@@ -128,7 +128,7 @@ module.exports = function(app, passport) {
 
 		//console.log(id);
 
-		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ?", [user_id, formattedDate, endDate], function(err, result){
+		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
 			if(!!err){
 				console.log("Error selecting data from db");
 			}else{
@@ -142,9 +142,93 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.get('/tasks/get/:id', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		var id = req.params.id;
+
+		connection.query("SELECT * FROM tasks where user_id = ? and id = ?", [user_id, id], function(err, result){
+			if(!!err){
+				console.log("Error selecting data from db");
+			}else{
+				res.send(result);
+				console.log("Success getting db data");
+			}
+		});
+
+	});
+
+	app.get('/tasks/day/single/edit/:id', isLoggedIn, function(req, res) {
+
+		var user_id = req.user.id;
+		//console.log(user_id);
+
+		var id = req.params.id;
+		//console.log(id);
+
+		connection.query("SELECT * FROM heroku_48633fb70d7d1e2.tasks where id = ? AND user_id = ?", [id, user_id], function(err, result){
+			if(!!err){
+				console.log("Error getting data");
+			}else{
+				res.render('edit.ejs', {
+					selectedData: result,
+				});
+				//console.log("Success getting one task");
+			}
+		});
+
+	});
 
 
-	
+	app.post('/tasks/days/single/edit/save/:id', isLoggedIn, function(req, res){
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		var data = {};
+
+	  data.name = req.body.name;
+	  data.category = req.body.category;
+	  data.start = req.body.start;
+	  data.end = req.body.end;
+	  data.user_id = req.user.id;
+
+		console.log(data);
+
+		connection.query("UPDATE tasks set ? WHERE id = ?", [data, id], function(err, result){
+			if(!!err){
+				console.log("Error getting data");
+			}else{
+				res.redirect('/profile');
+				//console.log("Success getting one task");
+			}
+		});
+	});
+
+
+	//DELETE
+
+	app.get('/tasks/days/single/delete/:id', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		connection.query("DELETE from tasks where id = ?", id, function(err, result){
+			if(!!err){
+				console.log("Error getting data!");
+			}else{
+				console.log("Success!");
+				res.redirect('/profile');
+			}
+		})
+
+	});
+
 
 
 

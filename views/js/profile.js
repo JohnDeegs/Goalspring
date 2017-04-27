@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+  
+
 
   //if the user has no stored data for this date already, then show the modal, if not then go straight to the page
 

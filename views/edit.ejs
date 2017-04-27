@@ -13,12 +13,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
-  	<script type="text/javascript" src=""></script>
+  	<script type="text/javascript" src="../../../../edit.js"></script>
 
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
-  	<link rel="stylesheet" type="text/css" href="../../../edit.min.css" />
+  	<link rel="stylesheet" type="text/css" href="../../../../edit.min.css" />
   </head>
   <body>
 
@@ -61,17 +61,32 @@
 
     <!--bg1-->
 
-    <h1 id="jumboHead">Edit</h1>
-
     <div class="container-fluid bg1">
 
-      <form class="taskForm" id="showForm" method="post" action="/api/tasks/edit/<%=dbdata[0].id%>">
+      <h3 style="margin-top: 100px;" class="page-header">Edit Task</h3>
+
+      <h4 id="todayDate"><%=selectedData[0].start %></h4>
+
+      <form class="taskForm" id="showForm" method="post" action="/tasks/days/single/edit/save/<%=selectedData[0].id%>">
         <div class="form-group">
           <label for="inputType">Task Name:</label>
-          <input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp" value="<%=dbdata[0].name%>">
+          <input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp" value="<%=selectedData[0].name%>">
         </div>
 
+        <div class="form-group">
+          <label for="inputType">Category:</label>
+          <input type="text" name="category" class="form-control" id="text2" aria-describedby="textHelp" value="<%=selectedData[0].category%>">
+        </div>
 
+        <div class="form-group">
+          <label for="inputType">Start Time:</label>
+          <input type="text" name="start" class="form-control time" id="sTime" aria-describedby="textHelp" placeholder="Start Time">
+        </div>
+
+        <div class="form-group">
+          <label for="inputType">End Time:</label>
+          <input type="text" name="end" class="form-control time" id="eTime" aria-describedby="textHelp" placeholder="End Time">
+        </div>
 
         <button type="submit" id="submitTaskBtn" class="btn btn-primary">Submit</button>
       </form>
