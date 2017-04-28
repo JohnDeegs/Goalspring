@@ -1,0 +1,57 @@
+/* SASS Variables */
+
+$body: #fff;
+$navcolor: #336600;
+$parasize: 18px;
+$bg2backgr: #C0C0C0;
+
+/* PALETTE */
+
+body {
+  background-color: $body;
+}
+
+/* HEADER */
+
+/* NAV BAR */
+
+.navbar{
+    background-color: $navcolor;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navbar a {
+  color: $body;
+  border-radius: 20px;
+}
+
+.navbar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#signIn {
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+.navbar h2{
+  font-size: 40px;
+}
+
+/* CONTENT */
+
+#header {
+  margin-top: 100px;
+}
+
+.graph div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}

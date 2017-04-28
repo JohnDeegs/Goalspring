@@ -1,11 +1,13 @@
 $(document).ready(function() {
-    var dateArray = [];
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    var $divBlock = $('#taskSelector');
+
 
     //loop for displaying our next 7 days in sequence
     for (var i = 0; i < 7; i++) {
+
+      var dateArray = [];
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      var $divBlock = $('#taskSelector');
 
         //get current date
 
@@ -38,7 +40,7 @@ $(document).ready(function() {
             return false;
         }
 
-      //  console.log(day);
+        //  console.log(day);
 
         if (mm === 1) {
             mm = months[0]
@@ -83,27 +85,31 @@ $(document).ready(function() {
         }
 
         //console.log(dd);
-      //  console.log(days);
+        //  console.log(days);
 
-        dateArray.push(formattedDate);
+        var taskCount;
 
-        //get count of tasks
+      $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/' + dayNumber + '' + monthNumber + '' + y + '"><div id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set:</p></div></div></a></div>');
 
-        var taskCount = $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
-             return data.length;
-        });
+        /*//get count of tasks
+        $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
 
-        $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/'+ dayNumber +''+ monthNumber +''+ y +'"><div class="' + i + '" id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set: '+taskCount()+'</p></div></div></a></div>');
+             taskCount = data.length;
+
+
+              $('#content').append(taskCount);
+
+              console.log(taskCount);
+
+
 
         //var identifier = i.getString();
-
+      });*/
     }
 
-  //  console.log(dateArray);
+    //  console.log(dateArray);
 
-    $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
-        console.log(data.length);
-    });
+
 
     /*$(".0").click(function(){
       alert("zero");
