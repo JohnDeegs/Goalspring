@@ -145,6 +145,9 @@ $(document).ready(function() {
 
         var pieCanvas = document.getElementById("pieChart");
 
+        //pieCanvas.canvas.width = 300;
+        //pieCanvas.canvas.height = 300;
+
         var mypie = {
             labels: pieNames,
             datasets: [{
