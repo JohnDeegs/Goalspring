@@ -1,17 +1,18 @@
 $(document).ready(function() {
 
 
+
     //loop for displaying our next 7 days in sequence
     for (var i = 0; i < 7; i++) {
 
-      var dateArray = [];
-      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-      var $divBlock = $('#taskSelector');
+        var dateArray = [];
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        var $divBlock = $('#taskSelector');
 
         //get current date
-
         var someDate = new Date();
+
         var numberOfDaysToAdd = i;
         someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
@@ -89,23 +90,34 @@ $(document).ready(function() {
 
         var taskCount;
 
-      $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/' + dayNumber + '' + monthNumber + '' + y + '"><div id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set:</p></div></div></a></div>');
-
-        /*//get count of tasks
-        $.get('/tasks/day/count/'+ dayNumber +''+ monthNumber +'' + y + '', function(data, status) {
-
-             taskCount = data.length;
+        $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/' + dayNumber + '' + monthNumber + '' + y + '"><div id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set:</p></div></div></a></div>');
 
 
-              $('#content').append(taskCount);
-
-              console.log(taskCount);
-
-
-
-        //var identifier = i.getString();
-      });*/
     }
+
+    var analyzeDate = new Date();
+
+    analyzeDate.setDate(analyzeDate.getDate());
+
+    var aDate = analyzeDate.getDate();
+    var aMonth = analyzeDate.getMonth() + 1;
+    var aDay = analyzeDate.getDay();
+
+    var aYear = analyzeDate.getFullYear();
+
+    if (aDate < 10) {
+        aDate = '0' + aDate + '';
+    }
+
+    if (aMonth < 10) {
+        aMonth = '0' + aMonth + '';
+    }
+
+    var $infoBtns = $('#infoBtns');
+
+    $infoBtns.append('<a href="/tasks/days/analyze/weekly/' + aDate + '' + aMonth + '' + aYear + '"><button class="btn btn-success">Weekly</button></a><button class="btn btn-success">All-Time</button>');
+
+
 
     //  console.log(dateArray);
 
