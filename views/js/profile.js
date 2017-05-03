@@ -118,6 +118,7 @@ $(document).ready(function() {
     $infoBtns.append('<a href="/tasks/days/analyze/weekly/' + aDate + '' + aMonth + '' + aYear + '"><button class="btn btn-success">Weekly</button></a><button class="btn btn-success">All-Time</button>');
 
 
+    
 
     //  console.log(dateArray);
 
