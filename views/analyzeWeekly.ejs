@@ -1,1 +1,104 @@
-Hello
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Task</title>
+
+    <meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  	<title>GoalSpring</title>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+  	<script type="text/javascript" src="../../../../analyzeWeekly.js"></script>
+
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+  	<link rel="stylesheet" type="text/css" href="../../../../analyze.min.css" />
+  </head>
+  <body>
+
+    <!--navbar-->
+
+    <div class="navbar navbar-fixed-top">
+  		<div class="container-fluid">
+
+  			<div class="navbar-header">
+  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+  					<i class="fa fa-bars" aria-hidden="true"></i>
+  				</button>
+  				<a href="#" class="navbar-brand">GoalSpring</a>
+  			</div>
+
+  			<div class="collapse navbar-collapse">
+  				<ul class="nav navbar-nav navbar-right">
+  					<li class="active">
+  						<a href="/">Home</a>
+  					</li>
+  					<li>
+  						<a href="about.html">About</a>
+  					</li>
+  					<li>
+  						<a href="contact.html">Contact</a>
+  					</li>
+  					<li>
+  						<a href="/profile">Calendar</a>
+  					</li>
+  					<li>
+  						<a href="/login" id="signIn">Sign In</a>
+  					</li>
+  				</ul>
+  			</div>
+
+  		</div>
+  	</div>
+
+    <!--end of navbar-->
+
+    <!--bg1-->
+
+    <div class="container-fluid bg1">
+
+      <div class="row">
+
+        <h1 id="header" class="page-header">Analysis</h1>
+
+        <div class="col-md-4">
+          <h3>Task Volume</h3>
+
+          <div id="pieDiv">
+            <canvas id="pieChart"></canvas>
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+          <h3>Task Type</h3>
+
+          <div id="barDiv">
+            <canvas id="barChart"></canvas>
+          </div>
+
+
+        </div>
+
+        <div class="col-md-4">
+          <h3>Tasks By Day</h3>
+
+          <div id="lineDiv">
+            <canvas id="lineChart"></canvas>
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

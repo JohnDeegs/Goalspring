@@ -385,6 +385,35 @@ module.exports = function(app, passport) {
 		//==========================================================================
 
 		//==========================================================================
+
+		res.render('analyzeWeekly.ejs');
+	});
+
+	app.get('/tasks/days/analyze/weekly/get/:id', isLoggedIn, function(req, res){
+
+		console.log("CALLED");
+
+		var user_id = req.user.id;
+
+		//==========================================================================
+		//Here was are doing as above to get the current date to insert into our
+		//mysql query.
+
+		//get the params that we created in landing.js
+		var id = req.params.id;
+		//split the date in params for further manipulation
+		var str = id.split("");
+		//get the first two digits of param which contains the days
+		var startDay = ''+str[0]+''+str[1]+'';
+		//get the next two digits which contain the months
+		var startMonth = ''+str[2]+''+str[3]+'';
+		//get the final 4 digits which contain the year
+		var startYear = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
+
+		//End of start date code
+		//==========================================================================
+
+		//==========================================================================
 		//Start of fiding end date.
 		//Here are are getting the current date and adding 7 to it to get 7 days
 		//from now and thus the end date for our query
@@ -415,19 +444,22 @@ module.exports = function(app, passport) {
 		var startDate = ''+startYear+'-'+startMonth+'-'+startDay+' 00:00:00';
 		var endDate = ''+aYear+'-'+aMonth+'-'+aDate+' 23:59:59';
 
+		console.log(startDate);
+		console.log(endDate);
+
 		connection.query("SELECT * FROM tasks WHERE user_id = ? AND start >= ? and START <= ? ORDER BY start ASC", [user_id, startDate, endDate], function(err, result){
 			if(!!err){
 				console.log("Computer says no");
 			}else{
 				console.log(result);
 				console.log("Success");
-				res.render('analyzeWeekly.ejs', {
-					weeklyData: result
-				});
+				res.send(result);
 			}
 		});
 
 	});
+
+
 
 
 

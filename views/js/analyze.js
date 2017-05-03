@@ -15,11 +15,15 @@ $(document).ready(function() {
     var urlId = url.substr(url.length - 8);
     console.log(urlId);
 
+    console.log("This file");
+
     var taskData = [];
 
-    $.get('/tasks/days/analyze/get/' + urlId + '', function(data, status) {
+    $.get('/tasks/days/analyze/get/'+ urlId +'', function(data, status) {
         //Assign server data to variable;
         var obj = data;
+
+        console.log("CALLED");
 
         //loop through extracted data and get the category for all data
         for (var i = 0; i < obj.length; i++) {

@@ -1,0 +1,270 @@
+//implements jquery
+$(document).ready(function() {
+
+    //Get the url
+
+    var url = window.location.href;
+
+    //get the id of the day which is in the url
+
+    var urlId = url.substr(url.length - 8);
+
+    var taskData = [];
+
+    $.get('/tasks/days/analyze/weekly/get/' + urlId + '', function(data, status) {
+        var obj = data;
+        console.log(obj);
+
+        for (var i = 0; i < obj.length; i++) {
+            var category = obj[i]["category"];
+            taskData.push(category);
+        }
+
+        //Function that takes in an array and the name of the category
+        //and loops through the inputted array searching for matches to the
+        //inputted what category. If a match is found, we increment the
+        //count variable. At the end of the loop, return the value of the
+        //count variable
+
+        function countInArray(array, what) {
+            var count = 0;
+            for (var j = 0; j < array.length; j++) {
+                if (taskData[j] === what) {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+
+        //We get the amount of times each category has been used
+
+        var productiveCount = countInArray(taskData, "Productive");
+        var excerciseCount = countInArray(taskData, "Excercise");
+        var socialCount = countInArray(taskData, "Social");
+
+        //Create a new chart data variable and push the data we have
+        //collected from the database to this array.
+
+        var barChartData = [];
+
+        barChartData.push(productiveCount, excerciseCount, socialCount);
+
+
+        //Using the chart.js framework, we can now use this data for
+        //data viz purposes
+
+        var barCanvas = document.getElementById("barChart");
+
+        var bar = {
+            labels: ["Productive", "Excercise", "Social"],
+            datasets: [{
+                label: "Tasks:",
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+                data: barChartData,
+            }]
+        };
+
+        var barChartOptions = {
+            // All of my other bar chart option here
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+        //Using the canvas variable we assigned earlier, we can append our
+        //chart to the
+
+        var myBarChart = Chart.Bar(barCanvas, {
+            data: bar,
+            options: barChartOptions
+        });
+
+        //=====PIE CHART======//
+
+        var pieData = [];
+
+        var pieNames = [];
+
+        var pieColors = [];
+
+        var times = [];
+
+        console.log("Hello");
+
+        for (var i = 0; i < obj.length; i++) {
+
+            pieNames.push(obj[i]["name"])
+            var start = obj[i]["start"];
+            var end = obj[i]["end"];
+
+            var startParts = start.split("");
+            var startHour = '' + startParts[11] + '' + startParts[12] + '';
+            startHour = parseInt(startHour);
+
+            var endParts = end.split("");
+            var endHour = '' + endParts[11] + '' + endParts[12] + '';
+            endHour = parseInt(endHour);
+
+            if (endHour > startHour) {
+                var difference = endHour - startHour;
+                console.log(difference)
+                times.push(difference);
+            } else {
+                return;
+            }
+
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+
+            pieColors.push("rgb(" + r + "," + g + "," + b + ")");
+        }
+
+        console.log("Bye");
+
+        console.log(times);
+        console.log(pieNames);
+
+        var pieCanvas = document.getElementById("pieChart");
+
+        //pieCanvas.canvas.width = 300;
+        //pieCanvas.canvas.height = 300;
+
+        var mypie = {
+            labels: pieNames,
+            datasets: [{
+                data: times,
+                backgroundColor: pieColors,
+                hoverBackgroundColor: pieColors
+            }]
+        };
+
+        var myPieChart = new Chart(pieCanvas, {
+            type: 'pie',
+            data: mypie
+        });
+
+        //console.log(pieData);
+
+        //================END OF PIE DATA=====================================//
+
+        //====================================================================//
+        //START OF LINE Chart
+        //LINE CHART WILL SHOW USER USAGE OVER THE DAYS OF THE WEEK
+
+        var dayDates = [];
+        var dayNums = [];
+        var dayOccurances = [];
+        var counts = {};
+
+        var a = [];
+        var b = [];
+        var prev;
+
+        for (var i = 0; i < obj.length; i++) {
+            var start = obj[i]["start"];
+            start = start.substr(0, 10);
+            dayDates.push(start);
+        }
+
+        console.log(dayDates);
+
+        for (var i = 0; i < dayDates.length; i++) {
+
+            if (dayDates[i] !== prev) {
+                dayOccurances.push(1);
+            } else {
+                dayOccurances[dayOccurances.length - 1]++;
+            }
+            prev = dayDates[i]
+        }
+
+        console.log(dayOccurances);
+
+        function remove_duplicates(arr) {
+            var seen = {};
+            var uniqueArr = [];
+
+            for (var i = 0; i < arr.length; i++) {
+                if (!(arr[i] in seen)) {
+                    uniqueArr.push(arr[i]);
+                    seen[arr[i]] = true;
+                }
+            }
+
+            return uniqueArr;
+        }
+
+        dayDates = remove_duplicates(dayDates);
+
+        console.log(dayDates);
+
+        var lineDiv = document.getElementById("lineChart");
+
+        var lineData = {
+            labels: dayDates,
+            datasets: [{
+                label: "Tasks This Day:",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: dayOccurances,
+                spanGaps: false,
+            }]
+        };
+
+        var lineChartOptions = {
+            // All of my other bar chart option here
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+        var myLineChart = new Chart(lineDiv, {
+            type: 'line',
+            data: lineData,
+            options: lineChartOptions
+        });
+
+    });
+
+});
