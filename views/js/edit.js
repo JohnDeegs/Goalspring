@@ -3,11 +3,10 @@ $(document).ready(function(){
   var form = $('#showForm');
   var date = $('#todayDate').text();
   var dateHolder = $('#todayDate');
-  var time = $('#startTime').val();
 
-  var displayTime = time.substring(16, 24);
+  //var displayTime = time.substring(16, 24);
 
-  $('#startTime').html('<p>'+displayTime+'</p>');
+  //$('#startTime').html('<p>'+displayTime+'</p>');
 
   //activates the time picker JQuery plugin for our form in order to edit the time more smoothly
 
@@ -16,6 +15,9 @@ $(document).ready(function(){
   date = date.substring(0,15);
 
   dateHolder.html(date);
+
+  console.log(date);
+
 
   form.on('submit', function(e) {
     e.preventDefault(); //prevents form from submitting before our changes
@@ -41,6 +43,7 @@ $(document).ready(function(){
     // End of Validation
 
     //Formatting for mySQL datetime
+
 
     var day = date.substring(8, 10);
     var month = date.substring(4, 7);

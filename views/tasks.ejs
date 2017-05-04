@@ -1,6 +1,7 @@
 <!-- views/profile.ejs -->
 <!doctype html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,7 @@
 	<title>GoalSpring</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
 	<script type="text/javascript" src="../../../tasks.js"></script>
@@ -20,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../../../tasks.min.css" />
 
 </head>
+
 <body>
 
 	<div class="navbar navbar-fixed-top">
@@ -57,77 +59,152 @@
 
 	<div class="container-fluid bg1">
 
-		<div id="information">
 
-			<h3 class="page-header">Schedule Tools</h3>
+		<div class="row">
 
-			<ul>
-				<li>
-					Use "Generate" to fill out your data with reccommended data!
-				</li>
-				<li>
-					Use "Analyze" to analyze your current daily schedule!
-				</li>
-			</ul>
+			<div class="col-sm-6">
 
-			<div class="row">
-				<div class="col-xs-6">
-					<a href=""><button class="btn btn-success myBtn">Generate</button></a>
+				<div class="col-sm-12">
+					<div class="infoBox" id="createForm">
+						<h3 class="page-header">Create Task</h3>
+
+						<form class="taskForm" id="showForm" method="post" action="/tasks/day/single/create">
+			        <div class="form-group">
+			          <label for="inputType">Task Name:</label>
+			          <input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp">
+			        </div>
+
+			        <div class="form-group">
+			          <label for="inputType">Category:</label>
+			          <input type="text" name="category" class="form-control" id="text2" aria-describedby="textHelp">
+			        </div>
+
+			        <div class="form-group">
+			          <label for="inputType">Start Time:</label>
+			          <input type="text" name="start" class="form-control time" id="sTime" aria-describedby="textHelp" placeholder="Start Time">
+			        </div>
+
+			        <div class="form-group">
+			          <label for="inputType">End Time:</label>
+			          <input type="text" name="end" class="form-control time" id="eTime" aria-describedby="textHelp" placeholder="End Time">
+			        </div>
+
+			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>
+			      </form>
+					</div>
 				</div>
-				<div class="col-xs-6">
-					<button id="generateBtn" class="btn btn-success myBtn">Analyze</button>
+
+				<div id="taskHolder">
+
+					<h3 class="page-header">Tasks for today:</h3>
+
+					<% for(var i = 0; i < dbdata.length; i++){%>
+
+						<div id="oneTask">
+							<div class="row">
+
+								<div class="col-xs-4">
+									<p class="startTime">
+										<%= dbdata[i].start.toString().substring(15, 24) %> -
+									</p>
+									<p class="endTime">
+										<%= dbdata[i].end.toString().substring(15, 24) %>
+									</p>
+								</div>
+
+								<div class="col-xs-4">
+									<p id="taskTitle">
+										<strong><%= dbdata[i].name %></strong>
+									</p>
+
+									<p id="taskCat">
+										<%= dbdata[i].category %>
+									</p>
+								</div>
+
+
+
+								<div class="col-xs-4">
+									<a href="/tasks/day/single/edit/<%= dbdata[i].id %>"><button class="btn btn-success">Edit</button></a>
+									<a href="/tasks/days/single/delete/<%= dbdata[i].id %>"><button id="delBtn" class="btn btn-success">Delete</button></a>
+								</div>
+
+							</div>
+							<hr />
+						</div>
+
+						<%} %>
+
 				</div>
+
 			</div>
+
+			<div class="col-sm-6">
+
+				<div class="col-sm-12">
+					<div class="infoBox" id="information">
+						<h3 class="page-header">School Hours</h3>
+
+						<p>
+							Fill out the times where you must attend your academic place of learning here. Use "Auto-Fill" to fill the rest of the week with these times!
+						</p>
+
+						<div class="row">
+							<div class="col-xs-4">
+								<a href=""><button class="btn btn-success myBtn">School Hours</button></a>
+							</div>
+							<div class="col-xs-4">
+								<a href=""><button class="btn btn-success myBtn">Generate</button></a>
+							</div>
+							<div class="col-xs-4">
+								<button id="generateBtn" class="btn btn-success myBtn">Analyze</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="infoBox">
+						<h3 class="page-header">Schedule Tools</h3>
+
+						<ul>
+							<li>
+								Use "Generate" to fill out your data with reccommended data! Your current schedule will be overwritten.
+							</li>
+							<li>
+								Use "Analyze" to analyze your current daily schedule!
+							</li>
+						</ul>
+
+						<div class="row">
+							<div class="col-xs-4">
+								<a href=""><button class="btn btn-success myBtn">School Hours</button></a>
+							</div>
+							<div class="col-xs-4">
+								<a href=""><button class="btn btn-success myBtn">Generate</button></a>
+							</div>
+							<div class="col-xs-4">
+								<button id="generateBtn" class="btn btn-success myBtn">Analyze</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
 
 		</div>
 
-		<div id="taskHolder">
 
-			<h3 id="taskLabel" class="page-header">Tasks for today:</h3>
-
-			<% for(var i = 0; i < dbdata.length; i++){%>
-
-			<div id="oneTask">
-				<div class="row">
-
-					<div class="col-xs-4">
-						<p class="startTime">
-							<%= dbdata[i].start.toString().substring(15, 24) %> -
-						</p>
-						<p class="endTime">
-							<%= dbdata[i].end.toString().substring(15, 24) %>
-						</p>
-					</div>
-
-					<div class="col-xs-4">
-						<p id="taskTitle">
-							<strong><%= dbdata[i].name %></strong>
-						</p>
-
-						<p id="taskCat">
-							<%= dbdata[i].category %>
-						</p>
-					</div>
-
-
-
-					<div class="col-xs-4">
-						<a href="/tasks/day/single/edit/<%= dbdata[i].id %>"><button class="btn btn-success">Edit</button></a>
-						<a href="/tasks/days/single/delete/<%= dbdata[i].id %>"><button id="delBtn" class="btn btn-success">Delete</button></a>
-					</div>
-
-				</div>
-				<hr />
-			</div>
-
-			<%} %>
-
-		</div>
+	</div>
 
 
 
 
-		<!-- <div id="taskList">
+
+
+
+	<!-- <div id="taskList">
 
 			 This loops througb the data I've sent from the routes folder
 						<% for(var i = 0; i < dbdata.length; i++){%>
@@ -140,9 +217,9 @@
 
 						<%} %>-->
 
-		</div>
+	</div>
 
-		<!--<form class="taskForm" id="showForm" method="post" action="/api/tasks/create">
+	<!--<form class="taskForm" id="showForm" method="post" action="/api/tasks/create">
 			<div class="form-group">
 				<label for="inputType">Task Name:</label>
 				<input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp" placeholder="Enter Task">
@@ -176,7 +253,8 @@
 
 	</div>
 
-</div>
+	</div>
 
 </body>
+
 </html>

@@ -197,6 +197,32 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.post('/tasks/day/single/create', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		var data = {};
+
+	  data.name = req.body.name;
+	  data.category = req.body.category;
+	  data.start = req.body.start;
+	  data.end = req.body.end;
+	  data.user_id = req.user.id;
+
+		console.log(data);
+
+		connection.query("INSERT into tasks set ?", data, function(err, result){
+	    if(err) throw err;
+	    res.redirect(req.get('referer'));
+	    console.log("All good")
+	  });
+
+	});
+
 	app.get('/tasks/day/single/edit/:id', isLoggedIn, function(req, res) {
 
 		var user_id = req.user.id;

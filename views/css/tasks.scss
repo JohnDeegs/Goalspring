@@ -64,7 +64,7 @@ p{
 }
 
 #delBtn {
-  margin-top: 5px;
+
 }
 
 //bg1 specific
@@ -82,7 +82,7 @@ p{
 }*/
 
 #taskHolder{
-  margin-top: 50px;
+  margin-top: 100px;
   color: #000;
 }
 
@@ -90,9 +90,23 @@ p{
   margin-top: 100px;
 }
 
+.infoBox {
+  background-color: #f8f8f8;
+  margin-bottom: 10px;
+}
+
 .myBtn{
   margin: 0 auto;
   display: block;
+}
+
+#createForm {
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
+#showForm {
+  padding-top: 10px;
 }
 
 // other content
