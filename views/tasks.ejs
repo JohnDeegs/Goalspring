@@ -65,8 +65,53 @@
 			<div class="col-sm-6">
 
 				<div class="col-sm-12">
+					<div id="taskHolder">
+
+						<h3 class="page-header">Tasks for today:</h3>
+
+						<% for(var i = 0; i < dbdata.length; i++){%>
+
+							<div id="oneTask">
+								<div class="row">
+
+									<div class="col-xs-4">
+										<p class="startTime">
+											<%= dbdata[i].start.toString().substring(15, 24) %> -
+										</p>
+										<p class="endTime">
+											<%= dbdata[i].end.toString().substring(15, 24) %>
+										</p>
+									</div>
+
+									<div class="col-xs-4">
+										<p id="taskTitle">
+											<strong><%= dbdata[i].name %></strong>
+										</p>
+
+										<p id="taskCat">
+											<%= dbdata[i].category %>
+										</p>
+									</div>
+
+
+
+									<div class="col-xs-4">
+										<a href="/tasks/day/single/edit/<%= dbdata[i].id %>"><button class="btn btn-success">Edit</button></a>
+										<a href="/tasks/days/single/delete/<%= dbdata[i].id %>"><button id="delBtn" class="btn btn-success">Delete</button></a>
+									</div>
+
+								</div>
+								<hr />
+							</div>
+
+							<%} %>
+
+					</div>
+				</div>
+
+				<div class="col-sm-12">
 					<div class="infoBox" id="createForm">
-						<h3 class="page-header">Create Task</h3>
+						<h3 id="titles">Create Task</h3>
 
 						<form class="taskForm" id="showForm" method="post" action="/tasks/day/single/create">
 			        <div class="form-group">
@@ -94,78 +139,40 @@
 					</div>
 				</div>
 
-				<div id="taskHolder">
-
-					<h3 class="page-header">Tasks for today:</h3>
-
-					<% for(var i = 0; i < dbdata.length; i++){%>
-
-						<div id="oneTask">
-							<div class="row">
-
-								<div class="col-xs-4">
-									<p class="startTime">
-										<%= dbdata[i].start.toString().substring(15, 24) %> -
-									</p>
-									<p class="endTime">
-										<%= dbdata[i].end.toString().substring(15, 24) %>
-									</p>
-								</div>
-
-								<div class="col-xs-4">
-									<p id="taskTitle">
-										<strong><%= dbdata[i].name %></strong>
-									</p>
-
-									<p id="taskCat">
-										<%= dbdata[i].category %>
-									</p>
-								</div>
-
-
-
-								<div class="col-xs-4">
-									<a href="/tasks/day/single/edit/<%= dbdata[i].id %>"><button class="btn btn-success">Edit</button></a>
-									<a href="/tasks/days/single/delete/<%= dbdata[i].id %>"><button id="delBtn" class="btn btn-success">Delete</button></a>
-								</div>
-
-							</div>
-							<hr />
-						</div>
-
-						<%} %>
-
-				</div>
-
 			</div>
 
 			<div class="col-sm-6">
 
 				<div class="col-sm-12">
 					<div class="infoBox" id="information">
-						<h3 class="page-header">School Hours</h3>
+						<h3>School Hours</h3>
 
 						<p>
 							Fill out the times where you must attend your academic place of learning here. Use "Auto-Fill" to fill the rest of the week with these times!
 						</p>
 
-						<div class="row">
-							<div class="col-xs-4">
-								<a href=""><button class="btn btn-success myBtn">School Hours</button></a>
-							</div>
-							<div class="col-xs-4">
-								<a href=""><button class="btn btn-success myBtn">Generate</button></a>
-							</div>
-							<div class="col-xs-4">
-								<button id="generateBtn" class="btn btn-success myBtn">Analyze</button>
-							</div>
-						</div>
+
+						<form class="taskForm" id="showForm" method="post" action="/tasks/day/single/create">
+
+			        <div class="form-group">
+			          <label for="inputType">Start Time:</label>
+			          <input type="text" name="start" class="form-control time" id="sTime" aria-describedby="textHelp" placeholder="Start Time">
+			        </div>
+
+			        <div class="form-group">
+			          <label for="inputType">End Time:</label>
+			          <input type="text" name="end" class="form-control time" id="eTime" aria-describedby="textHelp" placeholder="End Time">
+			        </div>
+
+			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>
+			      </form>
+
 					</div>
 				</div>
 
 				<div class="col-sm-12">
 					<div class="infoBox">
-						<h3 class="page-header">Schedule Tools</h3>
+						<h3>Schedule Tools</h3>
 
 						<ul>
 							<li>

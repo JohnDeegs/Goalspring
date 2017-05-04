@@ -63,9 +63,10 @@ p{
   font-size: 14px;
 }
 
-#delBtn {
-
+#titles {
+  margin: 20px 0 10px;
 }
+
 
 //bg1 specific
 
@@ -91,6 +92,7 @@ p{
 }
 
 .infoBox {
+  padding: 5px 5px 5px 5px;
   background-color: #f8f8f8;
   margin-bottom: 10px;
 }
@@ -101,12 +103,12 @@ p{
 }
 
 #createForm {
-  margin-top: 100px;
+  margin-top: 40px;
   margin-bottom: 20px;
 }
 
 #showForm {
-  padding-top: 10px;
+  padding-top: 0px;
 }
 
 // other content
