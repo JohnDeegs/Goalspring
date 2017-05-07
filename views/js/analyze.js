@@ -8,12 +8,10 @@ $(document).ready(function() {
     //Get the url
 
     var url = window.location.href;
-    console.log(url);
 
     //get the id of the day which is in the url
 
     var urlId = url.substr(url.length - 8);
-    console.log(urlId);
 
     console.log("This file");
 
@@ -100,7 +98,12 @@ $(document).ready(function() {
         //chart to the
 
         var myBarChart = Chart.Bar(barCanvas, {
-            data: bar
+            data: bar,
+            options: {
+              legend: {
+                display: false
+              },
+            }
         });
 
         //=====PIE CHART======//

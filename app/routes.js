@@ -42,6 +42,7 @@ module.exports = function(app, passport) {
             failureFlash : true // allow flash messages
 		}),
         function(req, res) {
+					console.log(res);
             console.log("hello");
 						//user timeout if inactive
             if (req.body.remember) {
@@ -82,22 +83,7 @@ module.exports = function(app, passport) {
 
 		var user_id = req.user.id;
 
-		var someDate = new Date();
-
-		//someDate.setDate(someDate.getDate());
-
-		connection.query("SELECT * FROM tasks where user_id = ? ORDER BY start DESC", user_id, function(err, result){
-			if(!!err){
-				console.log("Error selecting data from db");
-			}else{
-				res.render('profile.ejs', {
-					dbdata: result,
-					today: someDate,
-					user : req.user // get the user out of session and pass to template
-				});
-				console.log("Success getting db data");
-			}
-		});
+		res.render('profile.ejs');
 
 
 	});
@@ -139,59 +125,6 @@ module.exports = function(app, passport) {
 				});
 				console.log("Success getting db data");
 				console.log(result);
-			}
-		});
-
-	});
-
-	app.get('/tasks/day/count/:id', isLoggedIn, function(req, res){
-		//get the params that we created in landing.js
-		var id = req.params.id;
-		//split the date in params for further manipulation
-		var str = id.split("");
-		//get the first two digits of param which contains the days
-		var days = ''+str[0]+''+str[1]+'';
-		//get the next two digits which contain the months
-		var month = ''+str[2]+''+str[3]+'';
-		//get the final 4 digits which contain the year
-		var year = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
-		//put them together for mysql datetime format
-		//creating two for the query
-		var formattedDate = ''+year+'-'+month+'-'+days+' 00:00:00';
-		var endDate = ''+year+'-'+month+'-'+days+' 23:59:59';
-
-		//console.log(str);
-		//console.log(days);
-		//console.log(year);
-		//console.log(formattedDate);
-
-		//getting the users identity
-		var user_id = req.user.id;
-
-		//console.log(id);
-
-		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
-			if(!!err){
-				console.log("Error selecting data from db");
-			}else{
-				res.send(result);
-				console.log("Success getting db data");
-			}
-		});
-
-	});
-
-	app.get('/tasks/get/:id', isLoggedIn, function(req, res){
-
-		var user_id = req.user.id;
-		var id = req.params.id;
-
-		connection.query("SELECT * FROM tasks where user_id = ? and id = ?", [user_id, id], function(err, result){
-			if(!!err){
-				console.log("Error selecting data from db");
-			}else{
-				res.send(result);
-				console.log("Success getting db data");
 			}
 		});
 
@@ -300,13 +233,14 @@ module.exports = function(app, passport) {
 
 		var user_id = req.user.id;
 
-		connection.query("SELECT count(*) from tasks where user_id = ?", user_id, function(err, result){
+		connection.query("SELECT count(*) from tasks where user_id = ?	", user_id, function(err, result){
 
-			if(!err){
+			if(!!err){
 				console.log("Error getting data!");
 				return;
 			}else{
 				console.log("Success getting count");
+				console.log(result);
 				res.send(result);
 			}
 
@@ -323,33 +257,7 @@ module.exports = function(app, passport) {
 
 		console.log(user_id);
 
-		//get the params that we created in landing.js
-		var id = req.params.id;
-		//split the date in params for further manipulation
-		var str = id.split("");
-		//get the first two digits of param which contains the days
-		var days = ''+str[0]+''+str[1]+'';
-		//get the next two digits which contain the months
-		var month = ''+str[2]+''+str[3]+'';
-		//get the final 4 digits which contain the year
-		var year = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
-		//put them together for mysql datetime format
-		//creating two for the query
-		var formattedDate = ''+year+'-'+month+'-'+days+' 00:00:00';
-		var endDate = ''+year+'-'+month+'-'+days+' 23:59:59';
-
-		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
-			if(!!err){
-				console.log("Error selecting data from db");
-			}else{
-				res.render('analyze.ejs', {
-					dbdata: result,
-					user : req.user // get the user out of session and pass to template
-				});
-				console.log("Success getting db data");
-				console.log(result);
-			}
-		});
+		res.render('analyze.ejs');
 
 	});
 
@@ -389,28 +297,6 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/tasks/days/analyze/weekly/:id', isLoggedIn, function(req, res){
-
-		var user_id = req.user.id;
-
-		//==========================================================================
-		//Here was are doing as above to get the current date to insert into our
-		//mysql query.
-
-		//get the params that we created in landing.js
-		var id = req.params.id;
-		//split the date in params for further manipulation
-		var str = id.split("");
-		//get the first two digits of param which contains the days
-		var startDay = ''+str[0]+''+str[1]+'';
-		//get the next two digits which contain the months
-		var startMonth = ''+str[2]+''+str[3]+'';
-		//get the final 4 digits which contain the year
-		var startYear = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
-
-		//End of start date code
-		//==========================================================================
-
-		//==========================================================================
 
 		res.render('analyzeWeekly.ejs');
 	});
@@ -483,6 +369,78 @@ module.exports = function(app, passport) {
 			}
 		});
 
+	});
+
+
+	//get prev 7 days for AI
+
+	app.get('/tasks/days/weekly/previous/:id', isLoggedIn, function(req, res){
+
+		console.log("CALLED");
+
+		var user_id = req.user.id;
+
+		//==========================================================================
+		//Here was are doing as above to get the current date to insert into our
+		//mysql query.
+
+		//get the params that we created in landing.js
+		var id = req.params.id;
+		//split the date in params for further manipulation
+		var str = id.split("");
+		//get the first two digits of param which contains the days
+		var startDay = ''+str[0]+''+str[1]+'';
+		//get the next two digits which contain the months
+		var startMonth = ''+str[2]+''+str[3]+'';
+		//get the final 4 digits which contain the year
+		var startYear = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
+
+		//End of start date code
+		//==========================================================================
+
+		//==========================================================================
+		//Start of fiding end date.
+		//Here are are getting the current date and subtracting from 7 from it to get 7 days
+		//from now and thus the end date for our query
+
+		//To get - 7 days we subtract 7 frpm all of our current variables.
+
+		var newDate = new Date();
+		newDate.setDate(newDate.getDate() - 7);
+
+		var aDate = newDate.getDate();
+		var aMonth = newDate.getMonth() + 1;
+		var aDay = newDate.getDay();
+
+		var aYear = newDate.getFullYear();
+
+		if (aDate < 10) {
+				aDate = '0' + aDate + '';
+		}
+
+		if (aMonth < 10) {
+				aMonth = '0' + aMonth + '';
+		}
+
+		var stringDate = '' + aDate + '' + aMonth + '' + aYear + '';
+
+		//put them together for mysql datetime format
+		//creating two for the query
+		var startDate = ''+startYear+'-'+startMonth+'-'+startDay+' 23:59:59';
+		var endDate = ''+aYear+'-'+aMonth+'-'+aDate+' 00:00:00';
+
+		console.log(startDate);
+		console.log(endDate);
+
+		connection.query("SELECT * FROM tasks WHERE user_id = ? AND start <= ? and START >= ? ORDER BY start ASC", [user_id, startDate, endDate], function(err, result){
+			if(!!err){
+				console.log("Computer says no");
+			}else{
+				console.log(result);
+				console.log("Success");
+				res.send(result);
+			}
+		});
 	});
 
 

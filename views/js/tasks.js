@@ -71,11 +71,33 @@ $(document).ready(function() {
 
   //assing the button to a variable for speed purposes
 
-  var $generateBtn = $('#generateBtn');
+  var $analyzeBtn = $('#analyzeBtn');
 
-  $generateBtn.click(function(){
+  $analyzeBtn.click(function(){
     window.location.href = '/tasks/days/analyze/'+urlId+'';
   });
+
+  //============================================================================
+
+  //AI
+
+  //variables
+  var $generateBtn = $('#generateBtn');
+
+  console.log("This file");
+
+  //on click of the generate button do this.
+  $generateBtn.on('click', function(){
+    alert("clicked");
+  });
+
+  /*$.get('/tasks/days/weekly/previous/'+urlId+'', function(data, status){
+
+    var obj = data;
+
+    console.log(obj);
+
+  });*/
 
 
 

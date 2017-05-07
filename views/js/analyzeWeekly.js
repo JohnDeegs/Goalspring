@@ -89,7 +89,10 @@ $(document).ready(function() {
                         beginAtZero: true
                     }
                 }]
-            }
+            },
+            legend: {
+              display: false
+            },
         }
 
         //Using the canvas variable we assigned earlier, we can append our

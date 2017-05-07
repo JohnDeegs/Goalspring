@@ -90,9 +90,9 @@ $(document).ready(function() {
 
         var taskCount;
 
-        $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/' + dayNumber + '' + monthNumber + '' + y + '"><div id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div><div id="textWrapper"><p id="content">Tasks Set:</p></div></div></a></div>');
+        $divBlock.append('<div class="col-sm-4"><a id="dayLink" href="/tasks/day/' + dayNumber + '' + monthNumber + '' + y + '"><div id="dayBlock"><div id="dayNumber">' + dd + '</div><div id="monthName">' + mm + ' ' + y + '</div><div id="dayName">' + day + '</div></div></a></div>');
 
-
+        //<div id="textWrapper"><p id="content">Tasks Set:</p></div>
     }
 
     var analyzeDate = new Date();
@@ -118,7 +118,7 @@ $(document).ready(function() {
     $infoBtns.append('<a href="/tasks/days/analyze/weekly/' + aDate + '' + aMonth + '' + aYear + '"><button class="btn btn-success">Weekly</button></a><button class="btn btn-success">All-Time</button>');
 
 
-    
+
 
     //  console.log(dateArray);
 
