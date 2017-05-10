@@ -86,9 +86,110 @@ $(document).ready(function() {
 
   console.log("This file");
 
+  $.get('/tasks/days/weekly/previous/'+urlId+'', function(data, status){
+
+    var obj = data;
+
+    console.log(data);
+
+    /*
+    A function to add up all the elements of an int array
+    This is used to calculate the total hours for each
+    category
+    */
+
+    function addArrayHours(arr){
+      console.log(arr);
+      var total = 0;
+
+      for(var j in arr){
+        total += arr[j];
+      }
+
+      return total;
+    }
+
+    /*
+    A function that will take both the start and end time
+    of each task as they appear in the database and format
+    these strings into integers of which we can get int
+    durations for our task hour calculations
+    */
+
+    function getDuration(start, end){
+
+      sTime = sTime.substring(11,13);
+      fTime = fTime.substring(11,13);
+
+      sTime = parseInt(sTime);
+      fTime = parseInt(fTime);
+
+      var duration = fTime - sTime;
+
+      return duration;
+    }
+
+    /*Declare variables out of the loop scope for
+    speed purposes
+     */
+
+    var excerciseArr = [];
+    var socialArr = [];
+    var productiveArr = [];
+
+    var sTime;
+    var fTime;
+    var total;
+
+    for(var i = 0; i < obj.length; i++){
+
+      if(obj[i]["category"] == "Excercise"){
+       sTime = obj[i]["start"];
+       fTime = obj[i]["end"];
+
+       total = getDuration(sTime, fTime);
+
+        excerciseArr.push(total);
+
+      }else if(obj[i]["category"] == "Social"){
+       sTime = obj[i]["start"];
+       fTime = obj[i]["end"];
+
+        var total = getDuration(sTime, fTime);
+
+        socialArr.push(total);
+
+      }else if(obj[i]["category"] == "Productive"){
+       sTime = obj[i]["start"];
+       fTime = obj[i]["end"];
+
+       total = getDuration(sTime, fTime);
+
+        productiveArr.push(total);
+
+      }
+    }
+
+    /*
+      Using our addArrayHours function we can now assign
+      the total category hours for each category to a
+      variable
+    */
+    
+    var excerciseHours = addArrayHours(excerciseArr);
+    var socialHours = addArrayHours(socialArr);
+    var productiveHours = addArrayHours(productiveArr);
+
+    //console.log(excerciseHours);
+    //console.log(socialHours);
+    //console.log(productiveHours);
+
   //on click of the generate button do this.
   $generateBtn.on('click', function(){
-    alert("clicked");
+
+
+  });
+
   });
 
   /*$.get('/tasks/days/weekly/previous/'+urlId+'', function(data, status){
