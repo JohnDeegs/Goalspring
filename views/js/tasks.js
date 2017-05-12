@@ -6,12 +6,12 @@ $(document).ready(function() {
   //Get the url
 
   var url = window.location.href;
-  console.log(url);
+  //console.log(url);
 
   //get the id of the day which is in the url
 
   let urlId = url.substr(url.length - 8);
-  console.log(urlId);
+  //console.log(urlId);
 
   //============================================================================
   //Posting the create data from to the db
@@ -84,13 +84,11 @@ $(document).ready(function() {
   //variables
   var $generateBtn = $('#generateBtn');
 
-  console.log("This file");
-
   $.get('/tasks/days/weekly/previous/'+urlId+'', function(data, status){
 
-    var obj = data;
+    var weekObj = data;
 
-    console.log(data);
+    //console.log(data);
 
     /*
     A function to add up all the elements of an int array
@@ -99,7 +97,7 @@ $(document).ready(function() {
     */
 
     function addArrayHours(arr){
-      console.log(arr);
+
       var total = 0;
 
       for(var j in arr){
@@ -116,15 +114,18 @@ $(document).ready(function() {
     durations for our task hour calculations
     */
 
+    var startHour;
+    var finalHour;
+
     function getDuration(start, end){
 
-      sTime = sTime.substring(11,13);
-      fTime = fTime.substring(11,13);
+      startHour = start.substring(11,13);
+      finalHour = end.substring(11,13);
 
-      sTime = parseInt(sTime);
-      fTime = parseInt(fTime);
+      startHour = parseInt(startHour);
+      finalHour = parseInt(finalHour);
 
-      var duration = fTime - sTime;
+      var duration = finalHour - startHour;
 
       return duration;
     }
@@ -137,36 +138,38 @@ $(document).ready(function() {
     var socialArr = [];
     var productiveArr = [];
 
-    var sTime;
-    var fTime;
+    var fullStartDate;
+    var fullFinalDate;
     var total;
 
-    for(var i = 0; i < obj.length; i++){
+    for(var i = 0; i < weekObj.length; i++){
 
-      if(obj[i]["category"] == "Excercise"){
-       sTime = obj[i]["start"];
-       fTime = obj[i]["end"];
+      if(weekObj[i]["category"] == "Excercise"){
+       fullStartDate = weekObj[i]["start"];
+       fullFinalDate = weekObj[i]["end"];
 
-       total = getDuration(sTime, fTime);
+       total = getDuration(fullStartDate, fullFinalDate);
 
         excerciseArr.push(total);
 
-      }else if(obj[i]["category"] == "Social"){
-       sTime = obj[i]["start"];
-       fTime = obj[i]["end"];
+      }else if(weekObj[i]["category"] == "Social"){
+       fullStartDate = weekObj[i]["start"];
+       fullFinalDate = weekObj[i]["end"];
 
-        var total = getDuration(sTime, fTime);
+        total = getDuration(fullStartDate, fullFinalDate);
 
         socialArr.push(total);
 
-      }else if(obj[i]["category"] == "Productive"){
-       sTime = obj[i]["start"];
-       fTime = obj[i]["end"];
+      }else if(weekObj[i]["category"] == "Productive"){
+       fullStartDate = weekObj[i]["start"];
+       fullFinalDate = weekObj[i]["end"];
 
-       total = getDuration(sTime, fTime);
+       total = getDuration(fullStartDate, fullFinalDate);
 
         productiveArr.push(total);
 
+      }else{
+        return;
       }
     }
 
@@ -175,20 +178,93 @@ $(document).ready(function() {
       the total category hours for each category to a
       variable
     */
-    
+
     var excerciseHours = addArrayHours(excerciseArr);
     var socialHours = addArrayHours(socialArr);
     var productiveHours = addArrayHours(productiveArr);
 
-    //console.log(excerciseHours);
-    //console.log(socialHours);
-    //console.log(productiveHours);
+    console.log(excerciseHours);
+    console.log(socialHours);
+    console.log(productiveHours);
 
-  //on click of the generate button do this.
-  $generateBtn.on('click', function(){
+    //=============================================================
 
+    /*
+    Here we calculcate the percentages of the tasks current completed
+    compared to what is reccommended from our findings. Whichever
+    percentage is lower is set as a priority for generation of the
+    day's tasks.
+     */
 
-  });
+    var recExcerciseHours = 7;
+    var recSocialHours = 17;
+    var recProductiveHours = 27;
+
+    var result;
+
+    function getHourPercentage(done, rec){
+      result = (done / rec) * 100;
+
+      return result;
+    }
+
+    var productivePerc = getHourPercentage(productiveHours, recProductiveHours);
+    var socialPerc = getHourPercentage(socialHours, recSocialHours);
+    var excercisePerc = getHourPercentage(excerciseHours, recExcerciseHours);
+
+    console.log(productivePerc);
+    console.log(socialPerc);
+    console.log(excercisePerc);
+
+    $.get('/tasks/days/analyze/get/'+urlId+'', function(data, status){
+
+      //Get all the possible hour slots in a day in .5 increments
+
+      var possbileTimes = [];
+      var startHolder = [];
+      var durationArr = [];
+      var dayStartDate;
+      var dayEndDate;
+      var dayStartHour;
+      var dayEndHour;
+
+      for(var i = 0; i < 21.5; i+=0.5){
+        possbileTimes.push(i);
+      }
+
+      var dayObj = data;
+
+      for(var i = 0; i < dayObj.length; i++){
+        dayStartDate = dayObj[i]["start"]
+        dayEndDate = dayObj[i]["end"]
+
+        var dayDuration = getDuration(dayStartDate, dayEndDate);
+
+        dayDuration = dayDuration * 2;
+
+        dayStartHour = dayStartDate.substring(11,13);
+
+        startHolder.push(startHour);
+
+        for(var j = 0; j < possbileTimes.length; j++){
+          if(possbileTimes[j] == dayStartHour){
+            possbileTimes.splice(j, dayDuration);
+          }
+        }
+      }
+
+      console.log(possbileTimes);
+      console.log(dayObj);
+      console.log(startHolder);
+    //  console.log(dayStartDate);
+    });
+
+    //on click of the generate button do this.
+    $generateBtn.on('click', function(){
+
+      alert("generated clicked");
+
+    });
 
   });
 
