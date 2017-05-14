@@ -210,6 +210,29 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.post('/tasks/day/generate/create', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		var data = req.body;
+
+	  data.user_id = req.user.id;
+
+		console.log("THIS IS THE CREATE DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		console.log(data);
+
+		connection.query("INSERT into tasks set ?", data, function(err, result){
+	    if(err) throw err;
+	    res.redirect(req.get('referer'));
+	    console.log("All good")
+	  });
+
+	});
+
 	app.get('/tasks/day/single/edit/:id', isLoggedIn, function(req, res) {
 
 		var user_id = req.user.id;

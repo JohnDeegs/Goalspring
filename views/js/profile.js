@@ -115,7 +115,7 @@ $(document).ready(function() {
 
     var $infoBtns = $('#infoBtns');
 
-    $infoBtns.append('<a href="/tasks/days/analyze/weekly/' + aDate + '' + aMonth + '' + aYear + '"><button class="btn btn-success">Weekly</button></a><button class="btn btn-success">All-Time</button>');
+    $infoBtns.append('<a href="/tasks/days/analyze/weekly/' + aDate + '' + aMonth + '' + aYear + '"><button class="btn btn-success">Weekly</button></a>');
 
 
 

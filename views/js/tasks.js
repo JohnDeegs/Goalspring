@@ -385,13 +385,15 @@ $(document).ready(function() {
         var positivtyPerc = getHourPercentage(positivityHours, recPositivityHours);
         var socialPerc = getHourPercentage(socialHours, recSocialHours);
         var excercisePerc = getHourPercentage(excerciseHours, recExcerciseHours);
-        var sleepPerc = getHourPercentage(sleepHours, recSleepHours);
+        //var sleepPerc = getHourPercentage(sleepHours, recSleepHours);
         var studyPerc = getHourPercentage(studyHours, recStudyHours);
+
+
 
         console.log(positivtyPerc);
         console.log(socialPerc);
         console.log(excercisePerc);
-        console.log(sleepPerc);
+        //console.log(sleepPerc);
         console.log(studyPerc);
         //console.log(excercisePerc);
 
@@ -423,7 +425,7 @@ $(document).ready(function() {
 
             var dayObj = data;
 
-            //console.log(possbileTimes);
+            console.log(dayObj);
 
             for (var i = 0; i < dayObj.length; i++) {
                 dayStartDate = dayObj[i]["start"]
@@ -457,8 +459,6 @@ $(document).ready(function() {
                     //console.log(dayStartHour);
                     if (possbileTimes[j] === dayStartHour) {
                         possbileTimes.splice(j, dayDuration);
-                    } else {
-                        console.log("No match");
                     }
                 }
             }
@@ -474,39 +474,143 @@ $(document).ready(function() {
             //console.log(possibleTimesNumber);
             var splitArray = [];
 
-            var blockArrs = []
-
-            /*for (var i = 0; i < possbileTimes.length; i++) {
+            var blockArrs = [];
+            var subArr = [];
+            for (var i = 0; i < possbileTimes.length; i++) {
+                subArr.push(possbileTimes[i]);
                 if (possbileTimes[i + 1] - possbileTimes[i] !== 0.5) {
-
-                    splitArray = possbileTimes.slice(0, i + 1);
-                    blockArrs.push(splitArray);
+                    blockArrs.push(subArr);
+                    subArr = [];
                 }
             }
 
-            console.log(blockArrs);*/
+            console.log(blockArrs);
 
-              var newArr = [];
-              var subArr = [];
-              for (var i = 0; i <  possbileTimes.length; i++) {
-                  subArr.push(possbileTimes[i]);
-                  if (possbileTimes[i + 1] - possbileTimes[i] !== 0.5) {
-                      newArr.push(subArr);
-                      subArr = [];
-                  }
+            var percArray = [positivtyPerc, socialPerc, excercisePerc, studyPerc];
+
+            var percObj = {
+                "Positivity": positivtyPerc,
+                "Social": socialPerc,
+                "Excercise": excercisePerc,
+                "Study": studyPerc
+            };
+
+            console.log(percObj);
+
+            //sorting obj into highest
+
+            var sortable = [];
+            for (var key in percObj) {
+                sortable.push([key, percObj[key]]);
+            }
+
+            sortable.sort(function(a, b) {
+                return a[1] - b[1];
+            });
+
+            console.log(sortable);
+
+            //=====
+            // Getting the largest value in obj
+
+            var percArr = Object.keys(percObj).map(function(key) {
+                return percObj[key];
+            });
+
+            var max = Math.max.apply(null, percArr);
+
+            console.log(max);
+
+            //====
+            // Getting size of obj
+
+            Object.size = function(obj) {
+                var size = 0,
+                    key;
+                for (key in obj) {
+                    if (obj.hasOwnProperty(key)) size++;
+                }
+                return size;
+            };
+
+            var size = Object.size(percArr);
+
+            console.log(size);
+
+            //====
+            //sort the possibilies into the largest time block first
+
+            blockArrs.sort(function(a, b) {
+                return b.length - a.length;
+            });
+
+            console.log(blockArrs);
+
+            console.log(dayStartDate);
+
+            // = dayObj[0]["start"]
+
+            var generateDate = dayObj[0]["start"];
+            generateDate = moment(generateDate).format('YYYY-MM-DD HH:mm:ss');
+            generateDate = generateDate.slice(0, 10);
+
+            console.log(generateDate);
+            console.log(sortable);
+
+            /*for(var i = 0; i < blockArrs.length; i++){
+              var intString = blockArrs[i][blockArrs[i].length - 1].toString();
+              if(intString[intString.length - 2] === "."){
+                parseInt(intString);
+                intString = intString + 0.5
               }
 
-            console.log(newArr);
+              blockArrs[i][blockArrs[i].length - 1] = intString;
+            }*/
 
-            //  var possibleTaskBlocks =
+            console.log(blockArrs[blockArrs.length-1][blockArrs.length]);
 
-            //  console.log(dayStartDate);
-        });
+            for(var i = 0; i < blockArrs.length; i++){
+              if(blockArrs[i][blockArrs.length] % 1 != 0){
+                blockArrs[i][blockArrs.length] = blockArrs[i][blockArrs.length] + 0.5;
+              }
+            }
 
-        //on click of the generate button do this.
-        $generateBtn.on('click', function() {
 
-            alert("generated clicked");
+
+            console.log(blockArrs);
+
+            console.log(blockArrs[0][0]);
+            console.log(blockArrs[0][blockArrs[0].length - 1]);
+
+            //on click of the generate button do this.
+            $generateBtn.on('click', function() {
+
+                var data = {};
+
+                //alert(sortable[0][0]);
+
+                for (var i = 0; i < 3; i++) {
+
+                    data.name = "Edit name";
+                    data.category = '' + sortable[i][0] + '';
+                    data.start = ''+generateDate+' '+blockArrs[i][0]+':00:00';
+                    data.end = ''+generateDate+' '+blockArrs[i][blockArrs[i].length - 1]+':00:00';
+
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        url: '/tasks/day/generate/create',
+                        success: function(data) {
+                            console.log('success');
+                            console.log(JSON.stringify(data));
+                        }
+                    });
+                }
+
+                console.log(data);
+
+            });
 
         });
 
