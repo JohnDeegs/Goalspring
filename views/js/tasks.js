@@ -230,6 +230,7 @@ $(document).ready(function() {
     function getDuration(start, end){
 
       startHour = start.substring(11,13);
+
       finalHour = end.substring(11,13);
 
       startHour = parseInt(startHour);
@@ -246,7 +247,11 @@ $(document).ready(function() {
 
     var excerciseArr = [];
     var socialArr = [];
-    var productiveArr = [];
+    var positivityArr = [];
+    var studyArr = [];
+    var sleepArr = [];
+    var schoolArr = [];
+    var otherArr = [];
 
     var fullStartDate;
     var fullFinalDate;
@@ -256,7 +261,10 @@ $(document).ready(function() {
 
       if(weekObj[i]["category"] == "Excercise"){
        fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
+
        fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
 
        total = getDuration(fullStartDate, fullFinalDate);
 
@@ -264,24 +272,69 @@ $(document).ready(function() {
 
       }else if(weekObj[i]["category"] == "Social"){
        fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
        fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
 
         total = getDuration(fullStartDate, fullFinalDate);
 
         socialArr.push(total);
 
-      }else if(weekObj[i]["category"] == "Productive"){
+      }else if(weekObj[i]["category"] == "Positivity"){
        fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
        fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
 
        total = getDuration(fullStartDate, fullFinalDate);
 
-        productiveArr.push(total);
+        positivityArr.push(total);
 
-      }else{
-        return;
-      }
+    }else if(weekObj[i]["category"] == "Study"){
+       fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
+       fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
+
+       total = getDuration(fullStartDate, fullFinalDate);
+
+        studyArr.push(total);
+
+    }else if(weekObj[i]["category"] == "Sleep"){
+       fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
+       fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
+
+       total = getDuration(fullStartDate, fullFinalDate);
+
+        sleepArr.push(total);
+
+    }else if(weekObj[i]["category"] == "School"){
+     fullStartDate = weekObj[i]["start"];
+     fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
+     fullFinalDate = weekObj[i]["end"];
+     fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
+
+     total = getDuration(fullStartDate, fullFinalDate);
+
+      schoolArr.push(total);
+
+    }else if(weekObj[i]["category"] == "Other"){
+       fullStartDate = weekObj[i]["start"];
+       fullStartDate = moment(fullStartDate).format('DD-MM-YYYY HH:mm:ss');
+       fullFinalDate = weekObj[i]["end"];
+       fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
+
+       total = getDuration(fullStartDate, fullFinalDate);
+
+        otherArr.push(total);
+
+    }else{
+      console.log("returned");
+      return;
     }
+  }
 
     /*
       Using our addArrayHours function we can now assign
@@ -291,11 +344,15 @@ $(document).ready(function() {
 
     var excerciseHours = addArrayHours(excerciseArr);
     var socialHours = addArrayHours(socialArr);
-    var productiveHours = addArrayHours(productiveArr);
+    var positivityHours = addArrayHours(positivityArr);
+    var sleepHours = addArrayHours(sleepArr);
+    var schoolHours = addArrayHours(schoolArr);
+    var studyHours = addArrayHours(studyArr);
+    var otherHours = addArrayHours(otherArr);
 
-    console.log(excerciseHours);
-    console.log(socialHours);
-    console.log(productiveHours);
+    //console.log(excerciseHours);
+    //console.log(socialHours);
+    //console.log(productiveHours);
 
     //=============================================================
 
@@ -308,7 +365,9 @@ $(document).ready(function() {
 
     var recExcerciseHours = 7;
     var recSocialHours = 17;
-    var recProductiveHours = 27;
+    var recSleepHours = 49;
+    var recPositivityHours = 7;
+    var recStudyHours = 27;
 
     var result;
 
@@ -320,12 +379,17 @@ $(document).ready(function() {
 
     //Get the percentages for each of our categories and assing them to a variable
 
-    var productivePerc = getHourPercentage(productiveHours, recProductiveHours);
+    var positivtyPerc = getHourPercentage(positivityHours, recPositivityHours);
     var socialPerc = getHourPercentage(socialHours, recSocialHours);
     var excercisePerc = getHourPercentage(excerciseHours, recExcerciseHours);
+    var sleepPerc = getHourPercentage(sleepHours, recSleepHours);
+    var studyPerc = getHourPercentage(studyHours, recStudyHours);
 
-    //console.log(productivePerc);
-    //console.log(socialPerc);
+    console.log(positivtyPerc);
+    console.log(socialPerc);
+    console.log(excercisePerc);
+    console.log(sleepPerc);
+    console.log(studyPerc);
     //console.log(excercisePerc);
 
     /*
@@ -350,34 +414,54 @@ $(document).ready(function() {
       var dayStartHour;
       var dayEndHour;
 
-      for(var i = 0; i < 21.5; i+=0.5){
+      for(var i = 0; i < 24; i+=0.5){
         possbileTimes.push(i);
       }
 
       var dayObj = data;
 
+      console.log(possbileTimes);
+
       for(var i = 0; i < dayObj.length; i++){
         dayStartDate = dayObj[i]["start"]
-        dayEndDate = dayObj[i]["end"]
+        dayStartDate = moment(dayStartDate).format('DD-MM-YYYY HH:mm:ss');
+        dayEndDate = dayObj[i]["end"];
+        dayEndDate = moment(dayEndDate).format('DD-MM-YYYY HH:mm:ss');
+
+        //console.log(dayStartDate);
+        //console.log(dayEndDate);
 
         var dayDuration = getDuration(dayStartDate, dayEndDate);
 
         dayDuration = dayDuration * 2;
 
+        //console.log(dayDuration);
+
         dayStartHour = dayStartDate.substring(11,13);
 
-        startHolder.push(startHour);
+        if(dayStartHour[0] == "0"){
+          dayStartHour = dayStartHour[1];
+        }
+
+        dayStartHour = parseInt(dayStartHour);
+
+        //console.log(typeof dayStartHour);
+        //console.log(dayStartHour);
+
+        startHolder.push(dayStartHour);
 
         for(var j = 0; j < possbileTimes.length; j++){
-          if(possbileTimes[j] == dayStartHour){
+          console.log(dayStartHour);
+          if(possbileTimes[j] === dayStartHour){
             possbileTimes.splice(j, dayDuration);
+          }else{
+            console.log("No match");
           }
         }
+
+        console.log(possbileTimes);
       }
 
-      console.log(possbileTimes);
-      console.log(dayObj);
-      console.log(startHolder);
     //  console.log(dayStartDate);
     });
 
@@ -389,15 +473,6 @@ $(document).ready(function() {
     });
 
   });
-
-  /*$.get('/tasks/days/weekly/previous/'+urlId+'', function(data, status){
-
-    var obj = data;
-
-    console.log(obj);
-
-  });*/
-
 
 
 });
