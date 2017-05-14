@@ -111,10 +111,10 @@
 				</div>
 
 				<div class="col-sm-12">
-					<div class="infoBox" id="createForm">
+					<div class="infoBox">
 						<h3 id="titles">Create Task</h3>
 
-						<form class="taskForm" id="showForm" method="post" action="/tasks/day/single/create">
+						<form class="taskForm form-padding" id="createForm" method="post" action="/tasks/day/single/create">
 			        <div class="form-group">
 			          <label for="inputType">Task Name:</label>
 			          <input type="text" name="name" class="form-control" id="text1" aria-describedby="textHelp">
@@ -127,12 +127,12 @@
 
 			        <div class="form-group">
 			          <label for="inputType">Start Time:</label>
-			          <input type="text" name="start" class="form-control time" id="sTime" aria-describedby="textHelp" placeholder="Start Time">
+			          <input type="text" name="start" class="form-control time" id="createSTime" aria-describedby="textHelp" placeholder="Start Time">
 			        </div>
 
 			        <div class="form-group">
 			          <label for="inputType">End Time:</label>
-			          <input type="text" name="end" class="form-control time" id="eTime" aria-describedby="textHelp" placeholder="End Time">
+			          <input type="text" name="end" class="form-control time" id="createETime" aria-describedby="textHelp" placeholder="End Time">
 			        </div>
 
 			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>
@@ -153,16 +153,46 @@
 						</p>
 
 
-						<form class="taskForm" id="showForm" method="post" action="/tasks/day/single/create">
+						<form class="taskForm form-padding" id="schoolForm" method="post" action="/tasks/day/school/create">
 
 			        <div class="form-group">
 			          <label for="inputType">Start Time:</label>
-			          <input type="text" name="start" class="form-control time" id="sTime" aria-describedby="textHelp" placeholder="Start Time">
+			          <input type="text" name="start" class="form-control time" id="schoolSTime" aria-describedby="textHelp" placeholder="Start Time">
 			        </div>
 
 			        <div class="form-group">
 			          <label for="inputType">End Time:</label>
-			          <input type="text" name="end" class="form-control time" id="eTime" aria-describedby="textHelp" placeholder="End Time">
+			          <input type="text" name="end" class="form-control time" id="schoolETime" aria-describedby="textHelp" placeholder="End Time">
+			        </div>
+
+			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>
+			      </form>
+
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="infoBox">
+						<h3>Sleep Hours</h3>
+
+						<p>
+							For those of us who like to snooze.
+						</p>
+						<p>
+							To ensure accurate data, it may be necccesary to insert both the morning times you are asleep, and the evening times you are asleep.
+						</p>
+
+
+						<form class="taskForm form-padding showForm" id="sleepForm" method="post" action="/tasks/day/sleep/create">
+
+			        <div class="form-group">
+			          <label for="inputType">Start Time:</label>
+			          <input type="text" name="start" class="form-control time" id="sleepSTime" aria-describedby="textHelp" placeholder="Start Time">
+			        </div>
+
+			        <div class="form-group">
+			          <label for="inputType">End Time:</label>
+			          <input type="text" name="end" class="form-control time" id="sleepETime" aria-describedby="textHelp" placeholder="End Time">
 			        </div>
 
 			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>

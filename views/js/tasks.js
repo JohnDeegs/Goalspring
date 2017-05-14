@@ -1,7 +1,9 @@
 //implements jquery
 $(document).ready(function() {
 
-  var form = $('#showForm');
+  var createForm = $('#createForm');
+  var sleepForm = $('#sleepForm');
+  var schoolForm = $('#schoolForm');
 
   //Get the url
 
@@ -20,19 +22,19 @@ $(document).ready(function() {
   $('.time').timepicker({'timeFormat': 'H:i', 'scrollDefault': 'now'});
 
   //form
-  form.on('submit', function(e) {
+  createForm.on('submit', function(e) {
     e.preventDefault(); //prevents form from submitting before our changes
 
     //Declare Variables
 
-    var userStartTime = $('#sTime');
-    var userFinishTime = $('#eTime');
+    var userStartTime = $('#createSTime');
+    var userFinishTime = $('#createETime');
 
     //==========================================================================
     //Time Validation
     //User cannot set the end time as happening before the start time.
-    var sTime = $('#sTime').val();
-    var fTime = $('#eTime').val();
+    var sTime = $('#createSTime').val();
+    var fTime = $('#createETime').val();
 
     var sCheck = sTime.substring(0,2);
     var fCheck = fTime.substring(0,2);
@@ -69,6 +71,110 @@ $(document).ready(function() {
 
   });
 
+  //form
+  sleepForm.on('submit', function(e) {
+    e.preventDefault(); //prevents form from submitting before our changes
+
+    //Declare Variables
+
+    var userStartTime = $('#sleepSTime');
+    var userFinishTime = $('#sleepETime');
+
+    //==========================================================================
+    //Time Validation
+    //User cannot set the end time as happening before the start time.
+    var sTime = $('#sleepSTime').val();
+    var fTime = $('#sleepETime').val();
+
+    var sCheck = sTime.substring(0,2);
+    var fCheck = fTime.substring(0,2);
+
+    sCheck = parseInt(sCheck);
+    fCheck = parseInt(fCheck);
+
+    if(sCheck > fCheck){
+      alert("There's no flux capacitor to take you back in time here!");
+      return;
+    }
+
+    //// End of Validation
+    //==========================================================================
+
+    //Formatting for mySQL datetime
+
+    var date;
+    date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var mySqlDate = ''+year+':'+month+':'+day+'';
+
+
+    //Translating the user inputs to our new MySQL translated strings
+    userStartTime.val(''+mySqlDate+' '+sTime+':00');
+    userFinishTime.val(''+mySqlDate+' '+fTime+':00');
+
+    //Submit the form
+    this.submit();
+
+  });
+
+  //form
+  schoolForm.on('submit', function(e) {
+    e.preventDefault(); //prevents form from submitting before our changes
+
+    //Declare Variables
+
+    var userStartTime = $('#schoolSTime');
+    var userFinishTime = $('#schoolETime');
+
+    //==========================================================================
+    //Time Validation
+    //User cannot set the end time as happening before the start time.
+    var sTime = $('#schoolSTime').val();
+    var fTime = $('#schoolETime').val();
+
+    var sCheck = sTime.substring(0,2);
+    var fCheck = fTime.substring(0,2);
+
+    sCheck = parseInt(sCheck);
+    fCheck = parseInt(fCheck);
+
+    if(sCheck > fCheck){
+      alert("There's no flux capacitor to take you back in time here!");
+      return;
+    }
+
+    //// End of Validation
+    //==========================================================================
+
+    //Formatting for mySQL datetime
+
+    var date;
+    date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    var mySqlDate = ''+year+':'+month+':'+day+'';
+
+
+    //Translating the user inputs to our new MySQL translated strings
+    userStartTime.val(''+mySqlDate+' '+sTime+':00');
+    userFinishTime.val(''+mySqlDate+' '+fTime+':00');
+
+    //Submit the form
+    this.submit();
+
+  });
+
+  //================================================================
+  // END OF FORMS
+  //================================================================
+
   //assing the button to a variable for speed purposes
 
   var $analyzeBtn = $('#analyzeBtn');
@@ -76,6 +182,10 @@ $(document).ready(function() {
   $analyzeBtn.click(function(){
     window.location.href = '/tasks/days/analyze/'+urlId+'';
   });
+
+  //==================================================================
+  // Before the sleep and school hours are submitted to the db
+  // we insert the generic data along with the times
 
   //============================================================================
 
@@ -88,7 +198,7 @@ $(document).ready(function() {
 
     var weekObj = data;
 
-    //console.log(data);
+    console.log(weekObj);
 
     /*
     A function to add up all the elements of an int array
@@ -208,13 +318,25 @@ $(document).ready(function() {
       return result;
     }
 
+    //Get the percentages for each of our categories and assing them to a variable
+
     var productivePerc = getHourPercentage(productiveHours, recProductiveHours);
     var socialPerc = getHourPercentage(socialHours, recSocialHours);
     var excercisePerc = getHourPercentage(excerciseHours, recExcerciseHours);
 
-    console.log(productivePerc);
-    console.log(socialPerc);
-    console.log(excercisePerc);
+    //console.log(productivePerc);
+    //console.log(socialPerc);
+    //console.log(excercisePerc);
+
+    /*
+      Now we run another GET request to our server to fetch the data from
+      the date specified in the URL a.k.a today's date. We go through the
+      possible times that can be used and elimate already user inserted
+      data using the durations of the already created tasks. The AI Agent
+      will then have a list of possible task durations for which it can
+      sort through and assign to various categories based on the percentage
+      calculations earlier
+    */
 
     $.get('/tasks/days/analyze/get/'+urlId+'', function(data, status){
 

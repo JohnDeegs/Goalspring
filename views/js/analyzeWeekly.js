@@ -113,25 +113,35 @@ $(document).ready(function() {
 
         var times = [];
 
-        console.log("Hello");
-
         for (var i = 0; i < obj.length; i++) {
 
             pieNames.push(obj[i]["name"])
             var start = obj[i]["start"];
+            start = moment(start).format('D-MM-YYYY H:mm:ss');
+
             var end = obj[i]["end"];
+            end = moment(end).format('D-MM-YYYY H:mm:ss');
 
             var startParts = start.split("");
-            var startHour = '' + startParts[11] + '' + startParts[12] + '';
+            if(startParts[12] === ":"){
+              startHour = '' + startParts[11] + '';
+            }else{
+              var startHour = '' + startParts[11] + '' + startParts[12] + '';
+            }
+
             startHour = parseInt(startHour);
 
             var endParts = end.split("");
-            var endHour = '' + endParts[11] + '' + endParts[12] + '';
+            if(endParts[12] === ":"){
+              endHour = '' + endParts[11] + '';
+            }else{
+              var endHour = '' + endParts[11] + '' + endParts[12] + '';
+            }
+
             endHour = parseInt(endHour);
 
             if (endHour > startHour) {
                 var difference = endHour - startHour;
-                console.log(difference)
                 times.push(difference);
             } else {
                 return;
@@ -143,11 +153,6 @@ $(document).ready(function() {
 
             pieColors.push("rgb(" + r + "," + g + "," + b + ")");
         }
-
-        console.log("Bye");
-
-        console.log(times);
-        console.log(pieNames);
 
         var pieCanvas = document.getElementById("pieChart");
 
@@ -168,8 +173,6 @@ $(document).ready(function() {
             data: mypie
         });
 
-        //console.log(pieData);
-
         //================END OF PIE DATA=====================================//
 
         //====================================================================//
@@ -187,11 +190,10 @@ $(document).ready(function() {
 
         for (var i = 0; i < obj.length; i++) {
             var start = obj[i]["start"];
-            start = start.substr(0, 10);
+            start = moment(start).format('D-MM-YYYY H:mm:ss');
+            start = start.substr(0, 9);
             dayDates.push(start);
         }
-
-        console.log(dayDates);
 
         for (var i = 0; i < dayDates.length; i++) {
 
@@ -202,8 +204,6 @@ $(document).ready(function() {
             }
             prev = dayDates[i]
         }
-
-        console.log(dayOccurances);
 
         function remove_duplicates(arr) {
             var seen = {};
@@ -220,8 +220,6 @@ $(document).ready(function() {
         }
 
         dayDates = remove_duplicates(dayDates);
-
-        console.log(dayDates);
 
         var lineDiv = document.getElementById("lineChart");
 

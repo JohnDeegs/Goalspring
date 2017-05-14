@@ -3,8 +3,6 @@ $(document).ready(function() {
 
     var a;
 
-
-
     //Get the url
 
     var url = window.location.href;
@@ -20,11 +18,21 @@ $(document).ready(function() {
     $.get('/tasks/days/analyze/get/'+ urlId +'', function(data, status) {
         //Assign server data to variable;
         var obj = data;
+        var gmtObj;
 
-        console.log("CALLED");
+        console.log(obj);
+
+        var modStart;
+        var modFinish;
 
         //loop through extracted data and get the category for all data
         for (var i = 0; i < obj.length; i++) {
+
+          modStart = obj[i]["start"];
+          modFinish = obj[i]["end"];
+
+          var now = moment(modStart).format('D-MM-YYYY H:mm:ss');
+          console.log(now);
 
             var a = obj[i]["category"];
             var category = obj[i].category;
@@ -42,7 +50,7 @@ $(document).ready(function() {
         function countInArray(array, what) {
             var count = 0;
             for (var j = 0; j < array.length; j++) {
-                if (taskData[j] === what) {
+                if (array[j] === what) {
                     count++;
                 }
             }
@@ -51,16 +59,19 @@ $(document).ready(function() {
 
         //We get the amount of times each category has been used
 
-        var productiveCount = countInArray(taskData, "Productive");
+        var positivityCount = countInArray(taskData, "Positivity");
         var excerciseCount = countInArray(taskData, "Excercise");
         var socialCount = countInArray(taskData, "Social");
+        var studyCount = countInArray(taskData, "Study");
+        var otherCount = countInArray(taskData, "Other");
+        var sleepCount = countInArray(taskData, "Sleep");
 
         //Create a new chart data variable and push the data we have
         //collected from the database to this array.
 
         var barChartData = [];
 
-        barChartData.push(productiveCount, excerciseCount, socialCount);
+        barChartData.push(positivityCount, excerciseCount, socialCount, studyCount, sleepCount, otherCount);
 
         //console.log(chartData);
 
@@ -70,7 +81,7 @@ $(document).ready(function() {
         var barCanvas = document.getElementById("barChart");
 
         var bar = {
-            labels: ["Productive", "Excercise", "Social"],
+            labels: ["Positivity", "Excercise", "Social", "Study", "Sleep", "Other"],
             datasets: [{
                 label: "Tasks:",
                 backgroundColor: [
@@ -120,9 +131,13 @@ $(document).ready(function() {
 
             console.log(obj);
 
-            pieNames.push(obj[i]["name"])
+            pieNames.push(obj[i]["name"]);
             var start = obj[i]["start"];
+            start = moment(start).format('D-MM-YYYY H:mm:ss');
+            console.log(start);
             var end = obj[i]["end"];
+            end = moment(end).format('D-MM-YYYY H:mm:ss');
+            console.log(end);
 
             var startParts = start.split("");
             var startHour = ''+startParts[11]+''+startParts[12]+'';
@@ -132,9 +147,12 @@ $(document).ready(function() {
             var endHour = ''+endParts[11]+''+endParts[12]+'';
             endHour = parseInt(endHour);
 
+            console.log(startHour);
+            console.log(endHour);
+
             if(endHour > startHour){
               var difference = endHour - startHour;
-              console.log(difference)
+              console.log(difference);
               times.push(difference);
             }else{
               return;

@@ -7,10 +7,12 @@ module.exports = function(app, passport) {
 		host: 'us-cdbr-iron-east-04.cleardb.net',
 		user: 'b74d68f5eda681',
 		password: '7e304855',
-		database : 'heroku_48633fb70d7d1e2'
+		database : 'heroku_48633fb70d7d1e2',
+		multipleStatements: true
 	});
 
 	connection.connect();
+	connection.query("SET time_zone = '+1:00'");
 
 //This is a fix for the cleardb server shutting down if not used for a few minutes which makes the heroku app crash, keeps the db connection active
 	setInterval(function () {
@@ -156,6 +158,58 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.post('/tasks/day/sleep/create', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		var data = {};
+
+	  data.name = "Sleep";
+	  data.category = "Sleep";
+	  data.start = req.body.start;
+	  data.end = req.body.end;
+	  data.user_id = req.user.id;
+
+		console.log(data);
+
+		connection.query("INSERT into tasks set ?", data, function(err, result){
+	    if(err) throw err;
+	    res.redirect(req.get('referer'));
+	    console.log("All good")
+	  });
+
+	});
+
+	app.post('/tasks/day/school/create', isLoggedIn, function(req, res){
+
+		var user_id = req.user.id;
+		console.log(user_id);
+
+		var id = req.params.id;
+		console.log(id);
+
+		var data = {};
+
+	  data.name = "School";
+	  data.category = "School";
+	  data.start = req.body.start;
+	  data.end = req.body.end;
+	  data.user_id = req.user.id;
+
+		console.log(data);
+
+		connection.query("INSERT into tasks set ?", data, function(err, result){
+	    if(err) throw err;
+	    res.redirect(req.get('referer'));
+	    console.log("All good")
+	  });
+
+	});
+
 	app.get('/tasks/day/single/edit/:id', isLoggedIn, function(req, res) {
 
 		var user_id = req.user.id;
@@ -221,7 +275,7 @@ module.exports = function(app, passport) {
 				console.log("Error getting data!");
 			}else{
 				console.log("Success!");
-				res.redirect('/profile');
+				res.redirect(req.get('referer'));
 			}
 		})
 
@@ -275,16 +329,28 @@ module.exports = function(app, passport) {
 		var str = id.split("");
 		//get the first two digits of param which contains the days
 		var days = ''+str[0]+''+str[1]+'';
+
+		var daysInt = parseInt(days);
+
+		daysInt = daysInt - 1;
+
+		var startDays = daysInt.toString();
+
+		console.log('===============' + days);
+
 		//get the next two digits which contain the months
 		var month = ''+str[2]+''+str[3]+'';
 		//get the final 4 digits which contain the year
 		var year = ''+str[4]+''+str[5]+''+str[6]+''+str[7]+'';
 		//put them together for mysql datetime format
 		//creating two for the query
-		var formattedDate = ''+year+'-'+month+'-'+days+' 00:00:00';
+		var formattedDate = ''+year+'-'+month+'-'+startDays+' 23:59:59';
 		var endDate = ''+year+'-'+month+'-'+days+' 23:59:59';
 
-		connection.query("SELECT * FROM tasks where user_id = ? AND start >= ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
+		console.log(formattedDate);
+		console.log(endDate);
+
+		connection.query("SELECT * FROM tasks where user_id = ? AND start > ? AND start <= ? ORDER BY start ASC", [user_id, formattedDate, endDate], function(err, result){
 			if(!!err){
 				console.log("Error selecting data from db");
 			}else{
@@ -333,7 +399,7 @@ module.exports = function(app, passport) {
 		//To get + 7 days we had 7 to all of our current variables.
 
 		var newDate = new Date();
-		newDate.setDate(newDate.getDate() + 7);
+		newDate.setDate(newDate.getDate() - 7);
 
 		var aDate = newDate.getDate();
     var aMonth = newDate.getMonth() + 1;
@@ -354,12 +420,12 @@ module.exports = function(app, passport) {
 		//put them together for mysql datetime format
 		//creating two for the query
 		var startDate = ''+startYear+'-'+startMonth+'-'+startDay+' 00:00:00';
-		var endDate = ''+aYear+'-'+aMonth+'-'+aDate+' 23:59:59';
+		var endDate = ''+aYear+'-'+aMonth+'-'+aDate+' 00:00:00';
 
 		console.log(startDate);
 		console.log(endDate);
 
-		connection.query("SELECT * FROM tasks WHERE user_id = ? AND start >= ? and START <= ? ORDER BY start ASC", [user_id, startDate, endDate], function(err, result){
+		connection.query("SELECT * FROM tasks WHERE user_id = ? AND start <= ? and START >= ? ORDER BY start ASC", [user_id, startDate, endDate], function(err, result){
 			if(!!err){
 				console.log("Computer says no");
 			}else{
