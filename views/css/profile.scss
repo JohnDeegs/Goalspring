@@ -116,6 +116,16 @@ p{
   list-style-type: none;
 }
 
+@media only screen and (min-width: 700px){
+  #dayBlock {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+
+}
+
 #dayLink:hover {
   text-decoration: none;
 }
@@ -158,4 +168,42 @@ p{
 
 form {
   padding-top: 100px;
+}
+
+@media only screen and (min-width: 1050px){
+  #dayBlock {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+
+  #dayNumber {
+    font-size: 32px;
+  }
+
+  #monthName {
+    font-size: 14px;
+    margin-left: 10%;
+  }
+
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1100px){
+  #dayBlock {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+
+  #dayNumber {
+    font-size: 24px;
+  }
+
+  #monthName {
+    font-size: 12px;
+    margin-left: 10%;
+  }
+
 }
