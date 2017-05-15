@@ -129,40 +129,43 @@ $(document).ready(function() {
 
         for (var i = 0; i < obj.length; i++) {
 
-            console.log(obj);
+          pieNames.push(obj[i]["name"])
+          var start = obj[i]["start"];
+          start = moment(start).format('D-MM-YYYY H:mm:ss');
 
-            pieNames.push(obj[i]["name"]);
-            var start = obj[i]["start"];
-            start = moment(start).format('D-MM-YYYY H:mm:ss');
-            console.log(start);
-            var end = obj[i]["end"];
-            end = moment(end).format('D-MM-YYYY H:mm:ss');
-            console.log(end);
+          var end = obj[i]["end"];
+          end = moment(end).format('D-MM-YYYY H:mm:ss');
 
-            var startParts = start.split("");
-            var startHour = ''+startParts[11]+''+startParts[12]+'';
-            startHour = parseInt(startHour);
+          var startParts = start.split("");
+          if(startParts[12] === ":"){
+            startHour = '' + startParts[11] + '';
+          }else{
+            var startHour = '' + startParts[11] + '' + startParts[12] + '';
+          }
 
-            var endParts = end.split("");
-            var endHour = ''+endParts[11]+''+endParts[12]+'';
-            endHour = parseInt(endHour);
+          startHour = parseInt(startHour);
 
-            console.log(startHour);
-            console.log(endHour);
+          var endParts = end.split("");
+          if(endParts[12] === ":"){
+            endHour = '' + endParts[11] + '';
+          }else{
+            var endHour = '' + endParts[11] + '' + endParts[12] + '';
+          }
 
-            if(endHour > startHour){
+          endHour = parseInt(endHour);
+
+          if (endHour > startHour) {
               var difference = endHour - startHour;
-              console.log(difference);
               times.push(difference);
-            }else{
+          } else {
               return;
-            }
+          }
 
-            var r = Math.floor(Math.random() * 255);
-            var g = Math.floor(Math.random() * 255);
-            var b = Math.floor(Math.random() * 255);
+          var r = Math.floor(Math.random() * 255);
+          var g = Math.floor(Math.random() * 255);
+          var b = Math.floor(Math.random() * 255);
 
-            pieColors.push("rgb("+r+","+g+","+b+")");
+          pieColors.push("rgb(" + r + "," + g + "," + b + ")");
         }
 
         console.log(times);
