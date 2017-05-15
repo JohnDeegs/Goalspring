@@ -32,6 +32,11 @@ $(document).ready(function() {
 
         var userStartTime = $('#createSTime');
         var userFinishTime = $('#createETime');
+        var dropdown = $('#text2');
+
+        var dropdownText = $('#text2 option:selected').text();
+
+        dropdown.val(dropdownText);
 
         //==========================================================================
         //Time Validation
@@ -548,7 +553,7 @@ $(document).ready(function() {
 
             console.log(dayStartDate);
 
-            // = dayObj[0]["start"]
+            console.log(dayObj);
 
             var generateDate = dayObj[0]["start"];
             generateDate = moment(generateDate).format('YYYY-MM-DD HH:mm:ss');
