@@ -438,12 +438,30 @@ $(document).ready(function() {
                 dayEndDate = dayObj[i]["end"];
                 dayEndDate = moment(dayEndDate).format('DD-MM-YYYY HH:mm:ss');
 
-                //console.log(dayStartDate);
-                //console.log(dayEndDate);
+                console.log(dayStartDate);
+                console.log(dayEndDate.substring(11, 13));
+
+                if(dayEndDate.substring(11, 13) === "00"){
+                  var formatStringDate = dayEndDate.split("");
+                  formatStringDate[11] = "2";
+                  formatStringDate[12] = "4";
+                  formatStringDate = formatStringDate.join("");
+                  dayEndDate = formatStringDate;
+                  console.log(dayEndDate);
+                }
 
                 var dayDuration = getDuration(dayStartDate, dayEndDate);
 
                 dayDuration = dayDuration * 2;
+
+                if(dayEndDate.substring(11, 13) === "24"){
+                  var formatStringDate = dayEndDate.split("");
+                  formatStringDate[11] = "0";
+                  formatStringDate[12] = "0";
+                  formatStringDate = formatStringDate.join("");
+                  dayEndDate = formatStringDate;
+                  console.log(dayEndDate);
+                }
 
                 //console.log(dayDuration);
 
@@ -455,6 +473,8 @@ $(document).ready(function() {
 
                 dayStartHour = parseInt(dayStartHour);
 
+                console.log(dayStartHour);
+
                 //console.log(typeof dayStartHour);
                 //console.log(dayStartHour);
 
@@ -463,6 +483,9 @@ $(document).ready(function() {
                 for (var j = 0; j < possbileTimes.length; j++) {
                     //console.log(dayStartHour);
                     if (possbileTimes[j] === dayStartHour) {
+                      console.log(dayStartHour);
+                      console.log(possbileTimes[j]);
+                      console.log(dayDuration);
                         possbileTimes.splice(j, dayDuration);
                     }
                 }
@@ -500,8 +523,6 @@ $(document).ready(function() {
                 "Study": studyPerc
             };
 
-            console.log(percObj);
-
             //sorting obj into highest
 
             var sortable = [];
@@ -513,10 +534,6 @@ $(document).ready(function() {
                 return a[1] - b[1];
             });
 
-            console.log(blockArrs[1]);
-
-            console.log(sortable);
-
             //=====
             // Getting the largest value in obj
 
@@ -525,8 +542,6 @@ $(document).ready(function() {
             });
 
             var max = Math.max.apply(null, percArr);
-
-            console.log(max);
 
             //====
             // Getting size of obj
@@ -542,8 +557,6 @@ $(document).ready(function() {
 
             var size = Object.size(percArr);
 
-            console.log(size);
-
             //====
             //sort the possibilies into the largest time block first
 
@@ -556,11 +569,6 @@ $(document).ready(function() {
             var generateDate = dayObj[0]["start"];
             generateDate = moment(generateDate).format('YYYY-MM-DD HH:mm:ss');
             generateDate = generateDate.slice(0, 10);
-
-            console.log(generateDate);
-            console.log(sortable);
-
-            console.log(blockArrs[0].slice(blockArrs[0].length - 5));
 
             var splitBlockArrs = []
 
@@ -591,13 +599,8 @@ $(document).ready(function() {
                 var strNum = parseInt(newStr);
 
                 blockArrs[i][0] = strNum;
-                console.log(blockArrs[i][0]);
               }
             }
-
-            console.log(blockArrs[1]);
-
-
 
             console.log(blockArrs);
 
