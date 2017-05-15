@@ -489,7 +489,7 @@ $(document).ready(function() {
                 }
             }
 
-            console.log(blockArrs);
+            console.log(blockArrs[1]);
 
             var percArray = [positivtyPerc, socialPerc, excercisePerc, studyPerc];
 
@@ -512,6 +512,8 @@ $(document).ready(function() {
             sortable.sort(function(a, b) {
                 return a[1] - b[1];
             });
+
+            console.log(blockArrs[1]);
 
             console.log(sortable);
 
@@ -549,10 +551,6 @@ $(document).ready(function() {
                 return b.length - a.length;
             });
 
-            console.log(blockArrs);
-
-            console.log(dayStartDate);
-
             console.log(dayObj);
 
             var generateDate = dayObj[0]["start"];
@@ -562,30 +560,47 @@ $(document).ready(function() {
             console.log(generateDate);
             console.log(sortable);
 
-            /*for(var i = 0; i < blockArrs.length; i++){
-              var intString = blockArrs[i][blockArrs[i].length - 1].toString();
-              if(intString[intString.length - 2] === "."){
-                parseInt(intString);
-                intString = intString + 0.5
-              }
+            console.log(blockArrs[0].slice(blockArrs[0].length - 5));
 
-              blockArrs[i][blockArrs[i].length - 1] = intString;
-            }*/
-
-            console.log(blockArrs[blockArrs.length-1][blockArrs.length]);
+            var splitBlockArrs = []
 
             for(var i = 0; i < blockArrs.length; i++){
-              if(blockArrs[i][blockArrs.length] % 1 != 0){
-                blockArrs[i][blockArrs.length] = blockArrs[i][blockArrs.length] + 0.5;
+              if(blockArrs[i].length > 6){
+                blockArrs[i] = blockArrs[i].splice(blockArrs[i].length - 5);
               }
             }
+
+
+            for(var i = 0; i < blockArrs.length; i++){
+              if(blockArrs[i][blockArrs[i].length - 1] % 1 != 0){
+                blockArrs[i][blockArrs[i].length -1] = blockArrs[i][blockArrs[i].length -1] + 0.5;
+
+                if(blockArrs[i][blockArrs[i].length -1] == 24){
+                  blockArrs[i][blockArrs[i].length -1] = 00;
+                }
+              }
+
+              if(blockArrs[i][0] % 1 != 0){
+                var stringify = blockArrs[i][0].toString();
+                stringify.split("");
+                var end = stringify[stringify.length -1];
+                if(end === "5"){
+                  var newStr = stringify.replace("5", "");
+                }
+
+                var strNum = parseInt(newStr);
+
+                blockArrs[i][0] = strNum;
+                console.log(blockArrs[i][0]);
+              }
+            }
+
+            console.log(blockArrs[1]);
 
 
 
             console.log(blockArrs);
 
-            console.log(blockArrs[0][0]);
-            console.log(blockArrs[0][blockArrs[0].length - 1]);
 
             //on click of the generate button do this.
             $generateBtn.on('click', function() {
@@ -598,7 +613,27 @@ $(document).ready(function() {
 
                     data.name = "Edit name";
                     data.category = '' + sortable[i][0] + '';
-                    data.start = ''+generateDate+' '+blockArrs[i][0]+':00:00';
+
+                    //To ensure that the webpage displays the correct minutes if the task is a half hour task
+                    if(blockArrs[i][0] % 1 != 0){
+                      var stringify = blockArrs[i][0].toString();
+                      stringify.split("");
+                      var end = stringify[stringify.length -1];
+                      if(end === "5"){
+                        var newStr = stringify.replace("5", "");
+                      }
+
+                      var strNum = parseInt(newStr);
+
+                      blockArrs[i][0] = strNum;
+
+                      data.start = ''+generateDate+' '+blockArrs[i][0]+':30:00';
+                    }else{
+                      data.start = ''+generateDate+' '+blockArrs[i][0]+':00:00';
+                    }
+
+                    console.log(data.start);
+
                     data.end = ''+generateDate+' '+blockArrs[i][blockArrs[i].length - 1]+':00:00';
 
                     $.ajax({
