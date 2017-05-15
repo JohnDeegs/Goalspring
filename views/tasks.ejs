@@ -65,6 +65,16 @@
 
 						<h3 class="page-header">Tasks for today:</h3>
 
+						<p>
+
+						</p>
+
+						<% if(dbdata.length == 0) { %>
+							<h4>
+								There is no data present for this day. Use the "Create Task" section below to begin and this text will disappear!
+							</h4>
+					<% } %>
+
 						<% for(var i = 0; i < dbdata.length; i++){%>
 
 							<div id="oneTask">
@@ -106,7 +116,7 @@
 				</div>
 
 				<div class="col-sm-12">
-					<div class="infoBox">
+					<div class="infoBox" id="createBox">
 						<h3 id="titles">Create Task</h3>
 
 						<form class="taskForm form-padding" id="createForm" method="post" action="/tasks/day/single/create">
