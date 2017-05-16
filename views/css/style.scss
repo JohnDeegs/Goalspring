@@ -19,6 +19,10 @@ body {
     background-color: $navcolor;
 }
 
+.navbar-toggle {
+  color: #fff;
+}
+
 .navbar a {
   color: $body;
   border-radius: 20px;

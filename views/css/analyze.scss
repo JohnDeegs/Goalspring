@@ -25,6 +25,9 @@ body {
   color: $body;
   border-radius: 20px;
 }
+.navbar-toggle {
+  color: #fff;
+}
 
 .navbar ul li a:hover {
   background-color: rgba(255, 255, 255, 0.1);
