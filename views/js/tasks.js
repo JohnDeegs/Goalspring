@@ -274,6 +274,15 @@ $(document).ready(function() {
                 fullFinalDate = weekObj[i]["end"];
                 fullFinalDate = moment(fullFinalDate).format('DD-MM-YYYY HH:mm:ss');
 
+                /*fullFinalDate = fullFinalDate.split("");
+
+                if(fullFinalDate[11] === "0" && fullFinalDate[12] === "0"){
+                  fullFinalDate[11] = "2";
+                  fullFinalDate[12] = "4";
+                }
+
+                fullFinalDate = fullFinalDate.join("");*/
+
                 total = getDuration(fullStartDate, fullFinalDate);
 
                 excerciseArr.push(total);
@@ -386,6 +395,8 @@ $(document).ready(function() {
         }
 
         //Get the percentages for each of our categories and assing them to a variable
+        console.log(socialArr);
+        console.log(socialHours);
 
         var positivtyPerc = getHourPercentage(positivityHours, recPositivityHours);
         var socialPerc = getHourPercentage(socialHours, recSocialHours);

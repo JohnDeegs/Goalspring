@@ -39,16 +39,19 @@ $(document).ready(function() {
 
         //We get the amount of times each category has been used
 
-        var productiveCount = countInArray(taskData, "Productive");
+        var positivityCount = countInArray(taskData, "Positivity");
         var excerciseCount = countInArray(taskData, "Excercise");
         var socialCount = countInArray(taskData, "Social");
+        var sleepCount = countInArray(taskData, "Sleep");
+        var schoolCount = countInArray(taskData, "Sschool");
+        var otherCount = countInArray(taskData, "Other");
 
         //Create a new chart data variable and push the data we have
         //collected from the database to this array.
 
         var barChartData = [];
 
-        barChartData.push(productiveCount, excerciseCount, socialCount);
+        barChartData.push(positivityCount, excerciseCount, socialCount, sleepCount, schoolCount, otherCount);
 
 
         //Using the chart.js framework, we can now use this data for
@@ -57,7 +60,7 @@ $(document).ready(function() {
         var barCanvas = document.getElementById("barChart");
 
         var bar = {
-            labels: ["Productive", "Excercise", "Social"],
+            labels: ["Positivty", "Excercise", "Social", "Sleep", "School", "Social", "Other"],
             datasets: [{
                 label: "Tasks:",
                 backgroundColor: [
