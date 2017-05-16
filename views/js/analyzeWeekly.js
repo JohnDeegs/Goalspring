@@ -191,7 +191,7 @@ $(document).ready(function() {
         for (var i = 0; i < obj.length; i++) {
             var start = obj[i]["start"];
             start = moment(start).format('D-MM-YYYY H:mm:ss');
-            start = start.substr(0, 9);
+            start = start.substr(0, 10);
             dayDates.push(start);
         }
 
@@ -204,6 +204,8 @@ $(document).ready(function() {
             }
             prev = dayDates[i]
         }
+
+        console.log(dayDates);
 
         function remove_duplicates(arr) {
             var seen = {};
