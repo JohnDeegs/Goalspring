@@ -43,7 +43,7 @@ $(document).ready(function() {
         var excerciseCount = countInArray(taskData, "Excercise");
         var socialCount = countInArray(taskData, "Social");
         var sleepCount = countInArray(taskData, "Sleep");
-        var schoolCount = countInArray(taskData, "Sschool");
+        var schoolCount = countInArray(taskData, "School");
         var otherCount = countInArray(taskData, "Other");
 
         //Create a new chart data variable and push the data we have
