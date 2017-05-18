@@ -254,16 +254,7 @@ $(document).ready(function() {
             }]
         };
 
-        var lineChartOptions = {
-            // All of my other bar chart option here
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
+        
 
         var myLineChart = new Chart(lineDiv, {
             type: 'line',
