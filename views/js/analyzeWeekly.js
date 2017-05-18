@@ -120,6 +120,8 @@ $(document).ready(function() {
 
         for (var i = 0; i < obj.length; i++) {
 
+          console.log("Hello world");
+
             pieNames.push(obj[i]["name"]);
             var start = obj[i]["start"];
             start = moment(start).format('D-MM-YYYY H:mm:ss');
@@ -158,6 +160,8 @@ $(document).ready(function() {
 
             pieColors.push("rgb(" + r + "," + g + "," + b + ")");
         }
+
+        console.log("Hello world");
 
         var pieCanvas = document.getElementById("pieChart");
 
