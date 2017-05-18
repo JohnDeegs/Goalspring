@@ -15,6 +15,27 @@ $(document).ready(function() {
     let urlId = url.substr(url.length - 8);
     //console.log(urlId);
 
+    var todayDay = urlId.substring(0, 2);
+
+    console.log(todayDay);
+
+    var todayMonth = urlId.substring(2, 4);
+    month = parseInt(todayMonth) - 1;
+    var todayMonth = month.toString();
+    console.log(todayMonth);
+
+    var todayYear = urlId.substring(4, 8);
+    console.log(todayYear);
+
+    //display current date on page
+
+    var todaysDate = new Date(todayYear, todayMonth, todayDay);
+
+    var dateString = todaysDate.toString().substring(0, 15);
+
+    document.getElementById('todayDate').innerHTML = dateString;
+    console.log(dateString);
+
     //============================================================================
     //Posting the create data from to the db
 
