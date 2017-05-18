@@ -151,6 +151,7 @@ $(document).ready(function() {
                 var difference = endHour - startHour;
                 times.push(difference);
             } else {
+              console.log("returned");
                 return;
             }
 
