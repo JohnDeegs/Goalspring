@@ -106,6 +106,8 @@ $(document).ready(function() {
             options: barChartOptions
         });
 
+        console.log("Hello world");
+
         //=====PIE CHART======//
 
         var pieData = [];
