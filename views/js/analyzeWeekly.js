@@ -13,7 +13,6 @@ $(document).ready(function() {
 
     $.get('/tasks/days/analyze/weekly/get/' + urlId + '', function(data, status) {
         var obj = data;
-        console.log(obj);
 
         for (var i = 0; i < obj.length; i++) {
             var category = obj[i]["category"];
@@ -106,8 +105,6 @@ $(document).ready(function() {
             options: barChartOptions
         });
 
-        console.log("Hello world");
-
         //=====PIE CHART======//
 
         var pieData = [];
@@ -119,8 +116,6 @@ $(document).ready(function() {
         var times = [];
 
         for (var i = 0; i < obj.length; i++) {
-
-          console.log("Hello world");
 
             pieNames.push(obj[i]["name"]);
             var start = obj[i]["start"];
@@ -150,9 +145,6 @@ $(document).ready(function() {
             if (endHour > startHour) {
                 var difference = endHour - startHour;
                 times.push(difference);
-            } else {
-              console.log("returned");
-              
             }
 
             var r = Math.floor(Math.random() * 255);
@@ -162,14 +154,12 @@ $(document).ready(function() {
             pieColors.push("rgb(" + r + "," + g + "," + b + ")");
         }
 
-        console.log("Hello world");
+
 
         var pieCanvas = document.getElementById("pieChart");
 
         //pieCanvas.canvas.width = 300;
         //pieCanvas.canvas.height = 300;
-
-        console.log(times)
 
         var mypie = {
             labels: pieNames,
