@@ -162,6 +162,8 @@ $(document).ready(function() {
         //pieCanvas.canvas.width = 300;
         //pieCanvas.canvas.height = 300;
 
+        console.log(times)
+
         var mypie = {
             labels: pieNames,
             datasets: [{
@@ -171,7 +173,7 @@ $(document).ready(function() {
             }]
         };
 
-        window.onload = function() {
+        /*window.onload = function() {
             setTimeout(function() {
                 var myPieChart = document.getElementById("pieCanvas").getContext("2d");
                 window.myLine = new Chart(myPieChart).Pie(mypie, {
@@ -179,12 +181,12 @@ $(document).ready(function() {
                 });
             }, 1000);
 
-        }
+        }*/
 
-        /*var myPieChart = new Chart(pieCanvas, {
+        var myPieChart = new Chart(pieCanvas, {
             type: 'pie',
             data: mypie
-        });*/
+        });
 
         //================END OF PIE DATA=====================================//
 
@@ -218,7 +220,6 @@ $(document).ready(function() {
             prev = dayDates[i]
         }
 
-        console.log(dayDates);
 
         function remove_duplicates(arr) {
             var seen = {};
@@ -282,5 +283,7 @@ $(document).ready(function() {
         });
 
     });
+
+
 
 });
