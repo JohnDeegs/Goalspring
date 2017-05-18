@@ -129,7 +129,7 @@ $(document).ready(function() {
 
         for (var i = 0; i < obj.length; i++) {
 
-          pieNames.push(obj[i]["name"])
+          pieNames.push(obj[i]["name"]);
           var start = obj[i]["start"];
           start = moment(start).format('D-MM-YYYY H:mm:ss');
 

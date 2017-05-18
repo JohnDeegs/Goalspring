@@ -94,7 +94,7 @@ $(document).ready(function() {
                 }]
             },
             legend: {
-              display: false
+                display: false
             },
         }
 
@@ -118,7 +118,7 @@ $(document).ready(function() {
 
         for (var i = 0; i < obj.length; i++) {
 
-            pieNames.push(obj[i]["name"])
+            pieNames.push(obj[i]["name"]);
             var start = obj[i]["start"];
             start = moment(start).format('D-MM-YYYY H:mm:ss');
 
@@ -126,19 +126,19 @@ $(document).ready(function() {
             end = moment(end).format('D-MM-YYYY H:mm:ss');
 
             var startParts = start.split("");
-            if(startParts[12] === ":"){
-              startHour = '' + startParts[11] + '';
-            }else{
-              var startHour = '' + startParts[11] + '' + startParts[12] + '';
+            if (startParts[12] === ":") {
+                startHour = '' + startParts[11] + '';
+            } else {
+                var startHour = '' + startParts[11] + '' + startParts[12] + '';
             }
 
             startHour = parseInt(startHour);
 
             var endParts = end.split("");
-            if(endParts[12] === ":"){
-              endHour = '' + endParts[11] + '';
-            }else{
-              var endHour = '' + endParts[11] + '' + endParts[12] + '';
+            if (endParts[12] === ":") {
+                endHour = '' + endParts[11] + '';
+            } else {
+                var endHour = '' + endParts[11] + '' + endParts[12] + '';
             }
 
             endHour = parseInt(endHour);
@@ -171,10 +171,20 @@ $(document).ready(function() {
             }]
         };
 
-        var myPieChart = new Chart(pieCanvas, {
+        window.onload = function() {
+            setTimeout(function() {
+                var myPieChart = document.getElementById("pieCanvas").getContext("2d");
+                window.myLine = new Chart(myPieChart).Pie(mypie, {
+                    responsive: true
+                });
+            }, 1000);
+
+        }
+
+        /*var myPieChart = new Chart(pieCanvas, {
             type: 'pie',
             data: mypie
-        });
+        });*/
 
         //================END OF PIE DATA=====================================//
 
