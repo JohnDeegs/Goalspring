@@ -152,8 +152,7 @@ $(document).ready(function() {
                 times.push(difference);
             } else {
               console.log("returned");
-              console.log(endHour);
-                return;
+              
             }
 
             var r = Math.floor(Math.random() * 255);
