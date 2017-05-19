@@ -65,7 +65,7 @@
 
 						<h3 class="page-header" id="todayDate"></h3>
 
-						<a href="/profile">Return to Calendar</a>
+						<a id="returnCalendar" href="/profile">Return to Calendar</a>
 
 						<% if(dbdata.length == 0) { %>
 							<h4>
@@ -155,6 +155,28 @@
 
 				<div class="col-sm-12">
 					<div class="infoBox" id="information">
+						<h3>Schedule Tools</h3>
+
+							<p>
+								Use "Generate" to fill out your data with reccommended data! Your current schedule will be overwritten.
+							</p>
+							<p>
+								When you've inserted tasks into your schedule, click the analyze button to view data visualization of your inserted tasks for a greater overall view of where you spend your time!
+							</p>
+
+						<div class="row">
+							<div class="col-sm-8">
+								<a href=""><button id="generateBtn" class="btn btn-success myBtn">Generate</button></a>
+							</div>
+							<div class="col-sm-8">
+								<button id="analyzeBtn" class="btn btn-success myBtn">Analyze</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="infoBox">
 						<h3>School Hours</h3>
 
 						<p>
@@ -207,28 +229,6 @@
 			        <button type="submit" id="submitTaskBtn" class="btn btn-success">Submit</button>
 			      </form>
 
-					</div>
-				</div>
-
-				<div class="col-sm-12">
-					<div class="infoBox">
-						<h3>Schedule Tools</h3>
-
-							<p>
-								Use "Generate" to fill out your data with reccommended data! Your current schedule will be overwritten.
-							</p>
-							<p>
-								When you've inserted tasks into your schedule, click the analyze button to view data visualization of your inserted tasks for a greater overall view of where you spend your time!
-							</p>
-
-						<div class="row">
-							<div class="col-sm-8">
-								<a href=""><button id="generateBtn" class="btn btn-success myBtn">Generate</button></a>
-							</div>
-							<div class="col-sm-8">
-								<button id="analyzeBtn" class="btn btn-success myBtn">Analyze</button>
-							</div>
-						</div>
 					</div>
 				</div>
 

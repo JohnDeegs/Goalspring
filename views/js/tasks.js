@@ -641,6 +641,7 @@ $(document).ready(function() {
             $generateBtn.on('click', function() {
 
                 var data = {};
+                var categorySelected = [];
 
                 //alert(sortable[0][0]);
 
@@ -648,6 +649,8 @@ $(document).ready(function() {
 
                     data.name = "Edit name";
                     data.category = '' + sortable[i][0] + '';
+
+                    categorySelected.push(sortable[i][0]);
 
                     //To ensure that the webpage displays the correct minutes if the task is a half hour task
                     if(blockArrs[i][0] % 1 != 0){
@@ -679,11 +682,14 @@ $(document).ready(function() {
                         success: function(data) {
                             console.log('success');
                             console.log(JSON.stringify(data));
+
                         }
                     });
                 }
 
-                console.log(data);
+                console.log(categorySelected);
+
+                alert('We analyzed your previous 7 days and think you should focus on '+categorySelected[0]+', '+categorySelected[1]+', '+categorySelected[2]+' categories. Your schedule will be updated to reflect this.');
 
             });
 
