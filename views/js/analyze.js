@@ -127,7 +127,11 @@ $(document).ready(function() {
 
         var times = [];
 
+        console.log("Hello");
+
         for (var i = 0; i < obj.length; i++) {
+
+            console.log("Hello");
 
           pieNames.push(obj[i]["name"]);
           var start = obj[i]["start"];
@@ -158,7 +162,7 @@ $(document).ready(function() {
               var difference = endHour - startHour;
               times.push(difference);
           } else {
-              return;
+              console.log("Returned");
           }
 
           var r = Math.floor(Math.random() * 255);
