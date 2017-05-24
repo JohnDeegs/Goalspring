@@ -638,7 +638,9 @@ $(document).ready(function() {
 
 
             //on click of the generate button do this.
-            $generateBtn.on('click', function() {
+            $generateBtn.on('click', function(event) {
+
+                
 
                 var data = {};
                 var categorySelected = [];
@@ -681,7 +683,7 @@ $(document).ready(function() {
                         url: '/tasks/day/generate/create',
                         success: function(data) {
                             console.log('success');
-                            console.log(JSON.stringify(data));
+                            
 
                         }
                     });
@@ -689,6 +691,8 @@ $(document).ready(function() {
 
                 console.log(categorySelected);
 
+                //$('#generateStats').append('We analyzed your previous 7 days and think you should focus on '+categorySelected[0]+', '+categorySelected[1]+', '+categorySelected[2]+' categories. Your schedule will be updated to reflect this.');
+                
                 alert('We analyzed your previous 7 days and think you should focus on '+categorySelected[0]+', '+categorySelected[1]+', '+categorySelected[2]+' categories. Your schedule will be updated to reflect this.');
 
             });
